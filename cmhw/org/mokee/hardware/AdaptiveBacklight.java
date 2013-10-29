@@ -28,7 +28,7 @@ import java.io.File;
  */
 public class AdaptiveBacklight {
 
-    private static String FILE_CABC = SystemProperties.get("ro.cm.hardware.cabc", "/sys/class/lcd/panel/power_reduce");
+    private static String FILE_CABC = SystemProperties.get("ro.mk.hardware.cabc", "/sys/class/lcd/panel/power_reduce");
 
     /**
      * Whether device supports an adaptive backlight technology.
