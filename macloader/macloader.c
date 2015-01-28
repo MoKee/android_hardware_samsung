@@ -16,15 +16,17 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "macloader"
+#define LOG_NDEBUG 0
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <cutils/log.h>
+#include <unistd.h>
+#include <pwd.h>
 
-#define LOG_TAG "macloader"
-#define LOG_NDEBUG 0
+#include <cutils/log.h>
 
 #define MACADDR_PATH "/efs/wifi/.mac.info"
 #define CID_PATH "/data/.cid.info"
@@ -57,6 +59,7 @@ int main() {
 
     /* get and compare mac addr */
     str = fgets(mac_addr_half, 9, file);
+    fclose(file);
     if (str == 0) {
         fprintf(stderr, "fgets() from file %s failed\n", MACADDR_PATH);
         ALOGE("Can't read from %s\n", MACADDR_PATH);
@@ -105,6 +108,10 @@ int main() {
     }
 
     if (type != NONE) {
+        const char *type_str;
+        struct passwd *pwd;
+        int fd;
+
         /* open cid file */
         cidfile = fopen(CID_PATH, "w");
         if(cidfile == 0) {
@@ -116,62 +123,63 @@ int main() {
         switch(type) {
             case NONE:
                 return -1;
-            break;
             case MURATA:
-                /* write murata to cid file */
-                ALOGI("Writing murata to %s\n", CID_PATH);
-                ret = fputs("murata", cidfile);
-            break;
+                type_str = "murata";
+                break;
             case SEMCOSH:
-                /* write semcosh to cid file */
-                ALOGI("Writing semcosh to %s\n", CID_PATH);
-                ret = fputs("semcosh", cidfile);
-            break;
+                type_str = "semcosh";
+                break;
             case SEMCOVE:
-                /* write semcove to cid file */
-                ALOGI("Writing semcove to %s\n", CID_PATH);
-                ret = fputs("semcove", cidfile);
-            break;
+                type_str = "semcove";
+                break;
             case SEMCO3RD:
-                ALOGI("Writing semco3rd to %s\n", CID_PATH);
-                ret = fputs("semco3rd", cidfile);
-            break;
+                type_str = "semco3rd";
+                break;
             case WISOL:
-                ALOGI("Writing wisol to %s\n", CID_PATH);
-                ret = fputs("wisol", cidfile);
-            break;
-         }
+                type_str = "wisol";
+                break;
+        }
 
+        ALOGI("Settting wifi type to %s in %s\n", type_str, CID_PATH);
+
+        ret = fputs(type_str, cidfile);
         if (ret != 0) {
-            fprintf(stderr, "fputs() to file %s failed\n", CID_PATH);
             ALOGE("Can't write to %s\n", CID_PATH);
-            return -1;
+            return 1;
         }
-        fclose(cidfile);
 
-        /* set permissions on cid file */
-        ALOGD("Setting permissions on %s\n", CID_PATH);
+        /* Change permissions of cid file */
+        ALOGD("Change permissions of %s\n", CID_PATH);
+
+        fd = fileno(cidfile);
         amode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
-        ret = chmod(CID_PATH, amode);
-
-        char* chown_cmd = (char*) malloc(strlen("chown system ") + strlen(CID_PATH) + 1);
-        char* chgrp_cmd = (char*) malloc(strlen("chgrp system ") + strlen(CID_PATH) + 1);
-        sprintf(chown_cmd, "chown system %s", CID_PATH);
-        sprintf(chgrp_cmd, "chgrp system %s", CID_PATH);
-        system(chown_cmd);
-        system(chgrp_cmd);
-
+        ret = fchmod(fd, amode);
         if (ret != 0) {
-            fprintf(stderr, "chmod() on file %s failed\n", CID_PATH);
-            ALOGE("Can't set permissions on %s\n", CID_PATH);
-            return ret;
+            fclose(cidfile);
+            ALOGE("Can't set permissions on %s - %s\n",
+                  CID_PATH, strerror(errno));
+            return 1;
         }
 
+        pwd = getpwnam("system");
+        if (pwd == NULL) {
+            fclose(cidfile);
+            ALOGE("Failed to find 'system' user - %s\n",
+                  strerror(errno));
+            return 1;
+        }
+
+        ret = fchown(fd, pwd->pw_uid, pwd->pw_gid);
+        fclose(cidfile);
+        if (ret != 0) {
+            ALOGE("Failed to change owner of %s - %s\n",
+                  CID_PATH, strerror(errno));
+            return 1;
+        }
     } else {
         /* delete cid file if no specific type */
         ALOGD("Deleting file %s\n", CID_PATH);
         remove(CID_PATH);
     }
-    fclose(file);
     return 0;
 }
