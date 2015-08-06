@@ -242,6 +242,15 @@ void Set_Mpeg4Enc_Param(SSBSIP_MFC_ENC_MPEG4_PARAM *pMpeg4Param, SEC_OMX_BASECOM
         break;
     }
 
+    if (pVideoEnc->intraRefresh.eRefreshMode == OMX_VIDEO_IntraRefreshCyclic) {
+        /* Cyclic Mode */
+        pMpeg4Param->RandomIntraMBRefresh = pVideoEnc->intraRefresh.nCirMBs;
+        SEC_OSAL_Log(SEC_LOG_TRACE, "RandomIntraMBRefresh: %d", pMpeg4Param->RandomIntraMBRefresh);
+    } else {
+        /* Don't support "Adaptive" and "Cyclic + Adaptive" */
+        pMpeg4Param->RandomIntraMBRefresh = 0;
+    }
+
     switch ((SEC_OMX_COLOR_FORMATTYPE)pSECInputPort->portDefinition.format.video.eColorFormat) {
     case OMX_SEC_COLOR_FormatNV12LPhysicalAddress:
     case OMX_SEC_COLOR_FormatNV12LVirtualAddress:
@@ -354,6 +363,15 @@ void Set_H263Enc_Param(SSBSIP_MFC_ENC_H263_PARAM *pH263Param, SEC_OMX_BASECOMPON
         pH263Param->EnableFRMRateControl = 0;
         pH263Param->CBRPeriodRf          = 100;
         break;
+    }
+
+    if (pVideoEnc->intraRefresh.eRefreshMode == OMX_VIDEO_IntraRefreshCyclic) {
+        /* Cyclic Mode */
+        pH263Param->RandomIntraMBRefresh = pVideoEnc->intraRefresh.nCirMBs;
+        SEC_OSAL_Log(SEC_LOG_TRACE, "RandomIntraMBRefresh: %d", pH263Param->RandomIntraMBRefresh);
+    } else {
+        /* Don't support "Adaptive" and "Cyclic + Adaptive" */
+        pH263Param->RandomIntraMBRefresh = 0;
     }
 
     switch ((SEC_OMX_COLOR_FORMATTYPE)pSECInputPort->portDefinition.format.video.eColorFormat) {

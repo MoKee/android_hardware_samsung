@@ -27,8 +27,8 @@
 #ifndef SEC_OMX_DEF
 #define SEC_OMX_DEF
 
-#include "OMX_Types.h"
-#include "OMX_IVCommon.h"
+#include <OMX_Types.h>
+#include <OMX_IVCommon.h>
 
 #define VERSIONMAJOR_NUMBER                1
 #define VERSIONMINOR_NUMBER                0

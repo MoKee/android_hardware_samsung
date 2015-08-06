@@ -26,6 +26,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../include \
 	$(TOP)/$(TARGET_HAL_PATH)/include \
 	$(TOP)/$(TARGET_OMX_PATH)/include/khronos \
+	$(TOP)/frameworks/native/include/media/openmax \
 	$(TOP)/$(TARGET_OMX_PATH)/include/sec
 
 LOCAL_MODULE_TAGS := eng

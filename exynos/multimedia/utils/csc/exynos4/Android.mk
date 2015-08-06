@@ -15,10 +15,12 @@ LOCAL_SRC_FILES := \
 	csc_linear_to_tiled_interleave_crop_neon.s \
 	csc_tiled_to_linear_crop_neon.s \
 	csc_tiled_to_linear_deinterleave_crop_neon.s \
+	csc_ARGB8888_to_YUV420SP_NEON.s \
 	csc_interleave_memcpy_neon.s \
 	csc_fimc.cpp
 
 LOCAL_C_INCLUDES := \
+	$(OMX_INC) \
 	$(TOP)/$(TARGET_OMX_PATH)/include/khronos \
 	$(TOP)/$(TARGET_OMX_PATH)/include/sec \
 	$(TOP)/$(TARGET_HAL_PATH)/include \
