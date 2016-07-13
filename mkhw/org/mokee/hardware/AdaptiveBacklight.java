@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2013 The CyanogenMod Project
- * Copyright (C) 2013 The MoKee Open Source Project
+ * Copyright (C) 2013-2016 The CyanogenMod Project
+ * Copyright (C) 2013-2016 The MoKee Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,9 @@
 
 package org.mokee.hardware;
 
-import org.mokee.hardware.util.FileUtils;
-
 import android.os.SystemProperties;
-import android.text.TextUtils;
 
-import java.io.File;
+import org.mokee.internal.util.FileUtils;
 
 /**
  * Adaptive backlight support (this refers to technologies like NVIDIA SmartDimmer,
@@ -30,7 +27,8 @@ import java.io.File;
  */
 public class AdaptiveBacklight {
 
-    private static String FILE_CABC = SystemProperties.get("ro.cm.hardware.cabc", "/sys/class/lcd/panel/power_reduce");
+    private static final String FILE_CABC = SystemProperties.get(
+            "ro.cm.hardware.cabc", "/sys/class/lcd/panel/power_reduce");
 
     /**
      * Whether device supports an adaptive backlight technology.
@@ -38,8 +36,8 @@ public class AdaptiveBacklight {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        File f = new File(FILE_CABC);
-        return f.exists();
+        return FileUtils.isFileWritable(FILE_CABC) &&
+                FileUtils.isFileReadable(FILE_CABC);
     }
 
     /**
@@ -49,11 +47,7 @@ public class AdaptiveBacklight {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        if (TextUtils.equals(FileUtils.readOneLine(FILE_CABC), "1")) {
-            return true;
-        } else {
-            return false;
-        }
+        return "1".equals(FileUtils.readOneLine(FILE_CABC));
     }
 
     /**
@@ -64,10 +58,6 @@ public class AdaptiveBacklight {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        if (status == true) {
-            return FileUtils.writeLine(FILE_CABC, "1");
-        } else {
-            return FileUtils.writeLine(FILE_CABC, "0");
-        }
+        return FileUtils.writeLine(FILE_CABC, status ? "1" : "0");
     }
 }

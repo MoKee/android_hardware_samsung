@@ -17,11 +17,9 @@
 
 package org.mokee.hardware;
 
-import org.mokee.hardware.util.FileUtils;
-
 import android.os.SystemProperties;
 
-import java.io.File;
+import org.mokee.internal.util.FileUtils;
 
 /**
  * Sunlight Readability Enhancement support, aka Facemelt Mode.
@@ -31,7 +29,8 @@ import java.io.File;
  * support.
  */
 public class SunlightEnhancement {
-    private static final String sOutdoorModePath = "/sys/class/mdnie/mdnie/outdoor";
+
+    private static final String FILE_SRE = "/sys/class/mdnie/mdnie/outdoor";
 
     /**
      * Whether device supports SRE
@@ -39,7 +38,8 @@ public class SunlightEnhancement {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return new File(sOutdoorModePath).exists();
+        return FileUtils.isFileWritable(FILE_SRE) &&
+                FileUtils.isFileReadable(FILE_SRE);
     }
 
     /**
@@ -49,10 +49,7 @@ public class SunlightEnhancement {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        String line = FileUtils.readOneLine(sOutdoorModePath);
-        if (line == null)
-            return false;
-        return line.equals("1");
+        return "1".equals(FileUtils.readOneLine(FILE_SRE));
     }
 
     /**
@@ -63,7 +60,7 @@ public class SunlightEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(sOutdoorModePath, status ? "1" : "0");
+        return FileUtils.writeLine(FILE_SRE, status ? "1" : "0");
     }
 
     /**
