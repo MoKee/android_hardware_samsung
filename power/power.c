@@ -388,7 +388,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
                        sizeof(touchkey_node)) == 0) {
             /*
              * If touchkey_node is 0, the keys have been disabled by another component
-             * (for example cmhw), which means we don't want them to be enabled when resuming
+             * (for example mkhw), which means we don't want them to be enabled when resuming
              * from suspend.
              */
             if ((touchkey_node[0] - '0') == 0) {

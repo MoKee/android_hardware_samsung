@@ -9,7 +9,7 @@ LOCAL_PACKAGE_NAME := AdvancedDisplay
 LOCAL_CERTIFICATE := platform
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    org.cyanogenmod.platform.internal
+    org.mokee.platform.internal
 
 include $(BUILD_PACKAGE)
 
