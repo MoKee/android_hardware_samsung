@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2015-2016 The CyanogenMod Project
- * Copyright (C) 2015-2016 The MoKee Open Source Project
+ * Copyright (C) 2015-2017 The MoKee Open Source Project
+ *           (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +47,7 @@ public class DisplayModeControl {
         new DisplayMode(2, "Natural"),
         new DisplayMode(3, "Cinema"),
         new DisplayMode(4, "Adaptive"),
+        new DisplayMode(5, "Reading"),
     };
 
     static {
