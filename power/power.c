@@ -44,7 +44,6 @@ struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
-    int boostpulse_warned;
     char cpu0_hispeed_freq[10];
     char cpu0_max_freq[10];
     char cpu4_hispeed_freq[10];
@@ -57,9 +56,12 @@ struct samsung_power_module {
 enum power_profile_e {
     PROFILE_POWER_SAVE = 0,
     PROFILE_BALANCED,
-    PROFILE_HIGH_PERFORMANCE
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_MAX
 };
+
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
+static bool boostpulse_warned = false;
 
 /**********************************************************
  *** HELPER FUNCTIONS
@@ -129,10 +131,10 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
     if (samsung_pwr->boostpulse_fd < 0) {
         samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
         if (samsung_pwr->boostpulse_fd < 0) {
-            if (!samsung_pwr->boostpulse_warned) {
+            if (!boostpulse_warned) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
                 ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, errno_str);
-                samsung_pwr->boostpulse_warned = 1;
+                boostpulse_warned = true;
             }
         }
     }
@@ -141,10 +143,14 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
 }
 
 static void set_power_profile(struct samsung_power_module *samsung_pwr,
-                              enum power_profile_e profile)
+                              int profile)
 {
     int rc;
     struct stat sb;
+
+    if (profile < 0 || profile >= PROFILE_MAX) {
+        return;
+    }
 
     if (current_power_profile == profile) {
         return;
@@ -310,7 +316,6 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     struct stat sb;
-    char buf[80];
     char touchkey_node[2];
     int rc;
 
@@ -341,7 +346,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
              * (for example mkhw), which means we don't want them to be enabled when resuming
              * from suspend.
              */
-            if ((touchkey_node[0] - '0') == 0) {
+            if (touchkey_node[0] == '0') {
                 samsung_pwr->touchkey_blocked = true;
             } else {
                 samsung_pwr->touchkey_blocked = false;
@@ -405,7 +410,7 @@ static int samsung_get_feature(struct power_module *module __unused,
                                feature_t feature)
 {
     if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
-        return 3;
+        return PROFILE_MAX;
     }
 
     return -1;
@@ -452,5 +457,4 @@ struct samsung_power_module HAL_MODULE_INFO_SYM = {
 
     .lock = PTHREAD_MUTEX_INITIALIZER,
     .boostpulse_fd = -1,
-    .boostpulse_warned = 0,
 };
