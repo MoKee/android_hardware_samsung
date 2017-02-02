@@ -71,11 +71,11 @@ enum {
     /* Playback devices */
     SND_DEVICE_MIN,
     SND_DEVICE_OUT_BEGIN = SND_DEVICE_MIN,
-    SND_DEVICE_OUT_HANDSET = SND_DEVICE_OUT_BEGIN,
+    SND_DEVICE_OUT_EARPIECE = SND_DEVICE_OUT_BEGIN,
     SND_DEVICE_OUT_SPEAKER,
     SND_DEVICE_OUT_HEADPHONES,
     SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES,
-    SND_DEVICE_OUT_VOICE_HANDSET,
+    SND_DEVICE_OUT_VOICE_EARPIECE,
     SND_DEVICE_OUT_VOICE_SPEAKER,
     SND_DEVICE_OUT_VOICE_HEADPHONES,
     SND_DEVICE_OUT_HDMI,
@@ -92,10 +92,10 @@ enum {
      */
     /* Capture devices */
     SND_DEVICE_IN_BEGIN = SND_DEVICE_OUT_END,
-    SND_DEVICE_IN_HANDSET_MIC  = SND_DEVICE_IN_BEGIN,
+    SND_DEVICE_IN_EARPIECE_MIC  = SND_DEVICE_IN_BEGIN,
     SND_DEVICE_IN_SPEAKER_MIC,
     SND_DEVICE_IN_HEADSET_MIC,
-    SND_DEVICE_IN_HANDSET_MIC_AEC,
+    SND_DEVICE_IN_EARPIECE_MIC_AEC,
     SND_DEVICE_IN_SPEAKER_MIC_AEC,
     SND_DEVICE_IN_HEADSET_MIC_AEC,
     SND_DEVICE_IN_VOICE_SPEAKER_MIC,
@@ -306,6 +306,8 @@ struct stream_out {
 #endif
 
     bool                         is_fastmixer_affinity_set;
+
+    int64_t                      last_write_time_us;
 };
 
 struct stream_in {
@@ -359,6 +361,10 @@ struct stream_in {
 
     struct audio_device*                dev;
     bool                                is_fastcapture_affinity_set;
+
+    int64_t                             last_read_time_us;
+    int64_t                             frames_read; /* total frames read, not cleared when
+                                                        entering standby */
 };
 
 struct mixer_card {

@@ -228,7 +228,6 @@ static const char * const use_case_table[AUDIO_USECASE_MAX] = {
     [USECASE_VOICE_CALL] = "voice-call",
 };
 
-
 #define STRING_TO_ENUM(string) { #string, string }
 
 static unsigned int audio_device_ref_count;
@@ -275,11 +274,11 @@ static int get_snd_codec_id(audio_format_t format)
 static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_NONE] = "none",
     /* Playback sound devices */
-    [SND_DEVICE_OUT_HANDSET] = "handset",
+    [SND_DEVICE_OUT_EARPIECE] = "earpiece",
     [SND_DEVICE_OUT_SPEAKER] = "speaker",
     [SND_DEVICE_OUT_HEADPHONES] = "headphones",
     [SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES] = "speaker-and-headphones",
-    [SND_DEVICE_OUT_VOICE_HANDSET] = "voice-handset",
+    [SND_DEVICE_OUT_VOICE_EARPIECE] = "voice-earpiece",
     [SND_DEVICE_OUT_VOICE_SPEAKER] = "voice-speaker",
     [SND_DEVICE_OUT_VOICE_HEADPHONES] = "voice-headphones",
     [SND_DEVICE_OUT_HDMI] = "hdmi",
@@ -290,10 +289,10 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_OUT_VOICE_TTY_HCO_HANDSET] = "voice-tty-hco-handset",
 
     /* Capture sound devices */
-    [SND_DEVICE_IN_HANDSET_MIC] = "handset-mic",
+    [SND_DEVICE_IN_EARPIECE_MIC] = "earpiece-mic",
     [SND_DEVICE_IN_SPEAKER_MIC] = "speaker-mic",
     [SND_DEVICE_IN_HEADSET_MIC] = "headset-mic",
-    [SND_DEVICE_IN_HANDSET_MIC_AEC] = "handset-mic",
+    [SND_DEVICE_IN_EARPIECE_MIC_AEC] = "earpiece-mic",
     [SND_DEVICE_IN_SPEAKER_MIC_AEC] = "voice-speaker-mic",
     [SND_DEVICE_IN_HEADSET_MIC_AEC] = "headset-mic",
     [SND_DEVICE_IN_VOICE_SPEAKER_MIC] = "voice-speaker-mic",
@@ -509,7 +508,7 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
         } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_OUT_VOICE_SPEAKER;
         } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_OUT_HANDSET;
+            snd_device = SND_DEVICE_OUT_EARPIECE;
         }
         if (snd_device != SND_DEVICE_NONE) {
             goto exit;
@@ -545,7 +544,7 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
     } else if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
         snd_device = SND_DEVICE_OUT_BT_SCO;
     } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-        snd_device = SND_DEVICE_OUT_HANDSET;
+        snd_device = SND_DEVICE_OUT_EARPIECE;
     } else {
         ALOGE("%s: Unknown device(s) %#x", __func__, devices);
     }
@@ -605,7 +604,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
         }
         if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
                 out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
@@ -644,7 +643,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
                     if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
                         snd_device = SND_DEVICE_IN_SPEAKER_MIC_AEC;
                     } else {
-                        snd_device = SND_DEVICE_IN_HANDSET_MIC_AEC;
+                        snd_device = SND_DEVICE_IN_EARPIECE_MIC_AEC;
                     }
                 } else if (in_device & AUDIO_DEVICE_IN_WIRED_HEADSET) {
                     snd_device = SND_DEVICE_IN_HEADSET_MIC_AEC;
@@ -665,7 +664,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             !(in_device & AUDIO_DEVICE_IN_VOICE_CALL) &&
             !(in_device & AUDIO_DEVICE_IN_COMMUNICATION)) {
         if (in_device & AUDIO_DEVICE_IN_BUILTIN_MIC) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (in_device & AUDIO_DEVICE_IN_BACK_MIC) {
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (in_device & AUDIO_DEVICE_IN_WIRED_HEADSET) {
@@ -676,24 +675,24 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             snd_device = SND_DEVICE_IN_HDMI_MIC;
         } else {
             ALOGE("%s: Unknown input device(s) %#x", __func__, in_device);
-            ALOGW("%s: Using default handset-mic", __func__);
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            ALOGW("%s: Using default earpiece-mic", __func__);
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         }
     } else {
         if (out_device & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_HEADSET_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
             snd_device = SND_DEVICE_IN_BT_SCO_MIC;
         } else {
             ALOGE("%s: Unknown output device(s) %#x", __func__, out_device);
-            ALOGW("%s: Using default handset-mic", __func__);
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            ALOGW("%s: Using default earpiece-mic", __func__);
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         }
     }
 exit:
@@ -1865,8 +1864,8 @@ static ssize_t read_frames(struct stream_in *in, void *buffer, ssize_t frames)
                     &frames_rd);
         } else {
             struct resampler_buffer buf = {
-                    { raw : NULL, },
-                    frame_count : frames_rd,
+                    .raw = NULL,
+                    .frame_count = frames_rd,
             };
             get_next_buffer(&in->buf_provider, &buf);
             if (buf.raw != NULL) {
@@ -2556,6 +2555,9 @@ static int out_standby(struct audio_stream *stream)
     }
     pthread_mutex_unlock(&out->lock);
     ALOGV("%s: exit", __func__);
+
+    // out->last_write_time_us = 0; unnecessary as a stale write time has same effect
+
     return 0;
 }
 
@@ -2917,8 +2919,28 @@ exit:
                 ALOGE("%s: error %zd - %s", __func__, ret, pcm_get_error(pcm_device->pcm));
         }
         out_standby(&out->stream.common);
-        usleep(bytes * 1000000 / audio_stream_out_frame_size(stream) /
-               out_get_sample_rate(&out->stream.common));
+        struct timespec t = { .tv_sec = 0, .tv_nsec = 0 };
+        clock_gettime(CLOCK_MONOTONIC, &t);
+        const int64_t now = (t.tv_sec * 1000000000LL + t.tv_nsec) / 1000;
+        const int64_t elapsed_time_since_last_write = now - out->last_write_time_us;
+        int64_t sleep_time = bytes * 1000000LL / audio_stream_out_frame_size(stream) /
+                   out_get_sample_rate(&stream->common) - elapsed_time_since_last_write;
+        if (sleep_time > 0) {
+            usleep(sleep_time);
+        } else {
+            // we don't sleep when we exit standby (this is typical for a real alsa buffer).
+            sleep_time = 0;
+        }
+        out->last_write_time_us = now + sleep_time;
+        // last_write_time_us is an approximation of when the (simulated) alsa
+        // buffer is believed completely full. The usleep above waits for more space
+        // in the buffer, but by the end of the sleep the buffer is considered
+        // topped-off.
+        //
+        // On the subsequent out_write(), we measure the elapsed time spent in
+        // the mixer. This is subtracted from the sleep estimate based on frames,
+        // thereby accounting for drain in the alsa buffer during mixing.
+        // This is a crude approximation; we don't handle underruns precisely.
     }
 
 #ifdef PREPROCESSING_ENABLED
@@ -3171,6 +3193,9 @@ static int do_in_standby_l(struct stream_in *in)
 
         in->standby = 1;
     }
+
+    in->last_read_time_us = 0;
+
     return 0;
 }
 
@@ -3388,9 +3413,35 @@ exit:
     if (read_and_process_successful == false) {
         in_standby(&in->stream.common);
         ALOGV("%s: read failed - sleeping for buffer duration", __func__);
-        usleep(bytes * 1000000 / audio_stream_in_frame_size(stream) /
-               in->requested_rate);
+        struct timespec t = { .tv_sec = 0, .tv_nsec = 0 };
+        clock_gettime(CLOCK_MONOTONIC, &t);
+        const int64_t now = (t.tv_sec * 1000000000LL + t.tv_nsec) / 1000;
+
+        // we do a full sleep when exiting standby.
+        const bool standby = in->last_read_time_us == 0;
+        const int64_t elapsed_time_since_last_read = standby ?
+                0 : now - in->last_read_time_us;
+        int64_t sleep_time = bytes * 1000000LL / audio_stream_in_frame_size(stream) /
+                in_get_sample_rate(&stream->common) - elapsed_time_since_last_read;
+        if (sleep_time > 0) {
+            usleep(sleep_time);
+        } else {
+            sleep_time = 0;
+        }
+        in->last_read_time_us = now + sleep_time;
+        // last_read_time_us is an approximation of when the (simulated) alsa
+        // buffer is drained by the read, and is empty.
+        //
+        // On the subsequent in_read(), we measure the elapsed time spent in
+        // the recording thread. This is subtracted from the sleep estimate based on frames,
+        // thereby accounting for fill in the alsa buffer during the interim.
+        memset(buffer, 0, bytes);
     }
+
+    if (bytes > 0) {
+        in->frames_read += bytes / audio_stream_in_frame_size(stream);
+    }
+
     return bytes;
 }
 
@@ -3399,6 +3450,35 @@ static uint32_t in_get_input_frames_lost(struct audio_stream_in *stream)
     (void)stream;
 
     return 0;
+}
+
+static int in_get_capture_position(const struct audio_stream_in *stream,
+                                   int64_t *frames, int64_t *time)
+{
+    if (stream == NULL || frames == NULL || time == NULL) {
+        return -EINVAL;
+    }
+
+    struct stream_in *in = (struct stream_in *)stream;
+    struct pcm_device *pcm_device;
+    int ret = -ENOSYS;
+
+    pcm_device = node_to_item(list_head(&in->pcm_dev_list),
+                              struct pcm_device, stream_list_node);
+
+    pthread_mutex_lock(&in->lock);
+    if (pcm_device->pcm) {
+        struct timespec timestamp;
+        unsigned int avail;
+        if (pcm_get_htimestamp(pcm_device->pcm, &avail, &timestamp) == 0) {
+            *frames = in->frames_read + avail;
+            *time = timestamp.tv_sec * 1000000000LL + timestamp.tv_nsec;
+            ret = 0;
+        }
+    }
+
+    pthread_mutex_unlock(&in->lock);
+    return ret;
 }
 
 static int add_remove_audio_effect(const struct audio_stream *stream,
@@ -3958,6 +4038,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     in->stream.set_gain = in_set_gain;
     in->stream.read = in_read;
     in->stream.get_input_frames_lost = in_get_input_frames_lost;
+    in->stream.get_capture_position = in_get_capture_position;
 
     in->devices = devices;
     in->source = source;
@@ -3968,6 +4049,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     if (config->sample_rate != CAPTURE_DEFAULT_SAMPLING_RATE)
         flags = flags & ~AUDIO_INPUT_FLAG_FAST;
     in->input_flags = flags;
+    // in->frames_read = 0;
     /* HW codec is limited to default channels. No need to update with
      * requested channels */
     in->config = pcm_profile->config;
@@ -4000,16 +4082,21 @@ static void adev_close_input_stream(struct audio_hw_device *dev,
     /* prevent concurrent out_set_parameters, or out_write from standby */
     pthread_mutex_lock(&adev->lock_inputs);
 
+    if (in->read_buf) {
+        free(in->read_buf);
+        in->read_buf = NULL;
+    }
+
+    if (in->resampler) {
+        release_resampler(in->resampler);
+        in->resampler = NULL;
+    }
+
 #ifdef PREPROCESSING_ENABLED
     int i;
 
     for (i=0; i<in->num_preprocessors; i++) {
         free(in->preprocessors[i].channel_configs);
-    }
-
-    if (in->read_buf) {
-        free(in->read_buf);
-        in->read_buf = NULL;
     }
 
     if (in->proc_buf_in) {
@@ -4027,10 +4114,6 @@ static void adev_close_input_stream(struct audio_hw_device *dev,
         in->ref_buf = NULL;
     }
 
-    if (in->resampler) {
-        release_resampler(in->resampler);
-        in->resampler = NULL;
-    }
 #endif
 
     in_standby_l(in);
