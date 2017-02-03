@@ -2,7 +2,7 @@
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (C) 2014 The CyanogenMod Project
  * Copyright (C) 2014-2015 Andreas Schneider <asn@cryptomilk.org>
- * Copyright (C) 2014-2015 Christopher N. Hesse <raymanfx@gmail.com>
+ * Copyright (C) 2014-2017 Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <malloc.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -35,23 +36,14 @@
 
 #include <hardware/hardware.h>
 #include <hardware/power.h>
+#include <liblights/samsung_lights_helper.h>
 
-#define BOOSTPULSE_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse"
-
-#define IO_IS_BUSY_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy"
-
-#define CPU0_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq"
-#define CPU0_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
-#define CPU4_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq"
-#define CPU4_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq"
-
-#define PANEL_BRIGHTNESS "/sys/class/backlight/panel/brightness"
+#include "samsung_power.h"
 
 struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
-    int boostpulse_warned;
     char cpu0_hispeed_freq[10];
     char cpu0_max_freq[10];
     char cpu4_hispeed_freq[10];
@@ -64,9 +56,12 @@ struct samsung_power_module {
 enum power_profile_e {
     PROFILE_POWER_SAVE = 0,
     PROFILE_BALANCED,
-    PROFILE_HIGH_PERFORMANCE
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_MAX
 };
+
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
+static bool boostpulse_warned = false;
 
 /**********************************************************
  *** HELPER FUNCTIONS
@@ -124,29 +119,6 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
-static unsigned int read_panel_brightness() {
-    unsigned int i, ret = 0;
-    int read_status;
-    // brightness can range from 0 to 255, so max. 3 chars + '\0'
-    char panel_brightness[4];
-
-    read_status = sysfs_read(PANEL_BRIGHTNESS, panel_brightness, sizeof(PANEL_BRIGHTNESS));
-    if (read_status < 0) {
-        ALOGE("%s: Failed to read panel brightness from %s!\n", __func__, PANEL_BRIGHTNESS);
-        return -1;
-    }
-
-    for (i = 0; i < (sizeof(panel_brightness) / sizeof(panel_brightness[0])); i++) {
-        if (isdigit(panel_brightness[i])) {
-            ret += (panel_brightness[i] - '0');
-        }
-    }
-
-    ALOGV("%s: Panel brightness is: %d", __func__, ret);
-
-    return ret;
-}
-
 /**********************************************************
  *** POWER FUNCTIONS
  **********************************************************/
@@ -159,10 +131,10 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
     if (samsung_pwr->boostpulse_fd < 0) {
         samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
         if (samsung_pwr->boostpulse_fd < 0) {
-            if (!samsung_pwr->boostpulse_warned) {
+            if (!boostpulse_warned) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
                 ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, errno_str);
-                samsung_pwr->boostpulse_warned = 1;
+                boostpulse_warned = true;
             }
         }
     }
@@ -171,10 +143,14 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
 }
 
 static void set_power_profile(struct samsung_power_module *samsung_pwr,
-                              enum power_profile_e profile)
+                              int profile)
 {
     int rc;
     struct stat sb;
+
+    if (profile < 0 || profile >= PROFILE_MAX) {
+        return;
+    }
 
     if (current_power_profile == profile) {
         return;
@@ -190,7 +166,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
             }
-            ALOGD("%s: set powersave mode", __func__);
+            ALOGV("%s: set powersave mode", __func__);
             break;
         case PROFILE_BALANCED:
             // Restore normal max freq
@@ -199,7 +175,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
             }
-            ALOGD("%s: set balanced mode", __func__);
+            ALOGV("%s: set balanced mode", __func__);
             break;
         case PROFILE_HIGH_PERFORMANCE:
             // Restore normal max freq
@@ -208,7 +184,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
             }
-            ALOGD("%s: set performance mode", __func__);
+            ALOGV("%s: set performance mode", __func__);
             break;
     }
 
@@ -322,11 +298,6 @@ static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr
     }
 }
 
-/*
- * The init function performs power management setup actions at runtime
- * startup, such as to set default cpufreq parameters.  This is called only by
- * the Power HAL instance loaded by PowerManagerService.
- */
 static void samsung_power_init(struct power_module *module)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
@@ -335,42 +306,25 @@ static void samsung_power_init(struct power_module *module)
     init_touch_input_power_path(samsung_pwr);
 }
 
-/*
- * The setInteractive function performs power management actions upon the
- * system entering interactive state (that is, the system is awake and ready
- * for interaction, often with UI devices such as display and touchscreen
- * enabled) or non-interactive state (the system appears asleep, display
- * usually turned off).  The non-interactive state is usually entered after a
- * period of inactivity, in order to conserve battery power during such
- * inactive periods.
- *
- * Typical actions are to turn on or off devices and adjust cpufreq parameters.
- * This function may also call the appropriate interfaces to allow the kernel
- * to suspend the system to low-power sleep state when entering non-interactive
- * state, and to disallow low-power suspend when the system is in interactive
- * state.  When low-power suspend state is allowed, the kernel may suspend the
- * system whenever no wakelocks are held.
- *
- * on is non-zero when the system is transitioning to an interactive / awake
- * state, and zero when transitioning to a non-interactive / asleep state.
- *
- * This function is called to enter non-interactive state after turning off the
- * screen (if present), and called to enter interactive state prior to turning
- * on the screen.
- */
+/**********************************************************
+ *** API FUNCTIONS
+ ***
+ *** Refer to power.h for documentation.
+ **********************************************************/
+
 static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     struct stat sb;
-    char buf[80];
     char touchkey_node[2];
     int rc;
 
     ALOGV("power_set_interactive: %d\n", on);
 
+    // Get panel backlight brightness from lights HAL
     // Do not disable any input devices if the screen is on but we are in a non-interactive state
     if (!on) {
-        if (read_panel_brightness() > 0) {
+        if (get_cur_panel_brightness() > 0) {
             ALOGV("%s: Moving to non-interactive state, but screen is still on,"
                   " not disabling input devices\n", __func__);
             goto out;
@@ -392,7 +346,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
              * (for example cmhw), which means we don't want them to be enabled when resuming
              * from suspend.
              */
-            if ((touchkey_node[0] - '0') == 0) {
+            if (touchkey_node[0] == '0') {
                 samsung_pwr->touchkey_blocked = true;
             } else {
                 samsung_pwr->touchkey_blocked = false;
@@ -408,42 +362,6 @@ out:
     ALOGV("power_set_interactive: %d done\n", on);
 }
 
-/*
- * The powerHint function is called to pass hints on power requirements, which
- * may result in adjustment of power/performance parameters of the cpufreq
- * governor and other controls.
- *
- * The possible hints are:
- *
- * POWER_HINT_VSYNC
- *
- *     Foreground app has started or stopped requesting a VSYNC pulse
- *     from SurfaceFlinger.  If the app has started requesting VSYNC
- *     then CPU and GPU load is expected soon, and it may be appropriate
- *     to raise speeds of CPU, memory bus, etc.  The data parameter is
- *     non-zero to indicate VSYNC pulse is now requested, or zero for
- *     VSYNC pulse no longer requested.
- *
- * POWER_HINT_INTERACTION
- *
- *     User is interacting with the device, for example, touchscreen
- *     events are incoming.  CPU and GPU load may be expected soon,
- *     and it may be appropriate to raise speeds of CPU, memory bus,
- *     etc.  The data parameter is unused.
- *
- * POWER_HINT_LOW_POWER
- *
- *     Low power mode is activated or deactivated. Low power mode
- *     is intended to save battery at the cost of performance. The data
- *     parameter is non-zero when low power mode is activated, and zero
- *     when deactivated.
- *
- * POWER_HINT_CPU_BOOST
- *
- *     An operation is happening where it would be ideal for the CPU to
- *     be boosted for a specific duration. The data parameter is an
- *     integer value of the boost duration in microseconds.
- */
 static void samsung_power_hint(struct power_module *module,
                                   power_hint_t hint,
                                   void *data)
@@ -454,10 +372,6 @@ static void samsung_power_hint(struct power_module *module,
 
     switch (hint) {
         case POWER_HINT_INTERACTION: {
-            char errno_str[64];
-            ssize_t len;
-            int fd;
-
             if (current_power_profile == PROFILE_POWER_SAVE) {
                 return;
             }
@@ -476,7 +390,6 @@ static void samsung_power_hint(struct power_module *module,
             break;
         }
         case POWER_HINT_VSYNC: {
-
             ALOGV("%s: POWER_HINT_VSYNC", __func__);
             break;
         }
@@ -497,13 +410,13 @@ static int samsung_get_feature(struct power_module *module __unused,
                                feature_t feature)
 {
     if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
-        return 3;
+        return PROFILE_MAX;
     }
 
     return -1;
 }
 
-static void samsung_set_feature(struct power_module *module, feature_t feature, int state)
+static void samsung_set_feature(struct power_module *module, feature_t feature, int state __unused)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
@@ -531,7 +444,7 @@ struct samsung_power_module HAL_MODULE_INFO_SYM = {
             .hal_api_version = HARDWARE_HAL_API_VERSION,
             .id = POWER_HARDWARE_MODULE_ID,
             .name = "Samsung Power HAL",
-            .author = "The CyanogenMod Project",
+            .author = "The LineageOS Project",
             .methods = &power_module_methods,
         },
 
@@ -544,5 +457,4 @@ struct samsung_power_module HAL_MODULE_INFO_SYM = {
 
     .lock = PTHREAD_MUTEX_INITIALIZER,
     .boostpulse_fd = -1,
-    .boostpulse_warned = 0,
 };

@@ -17,8 +17,6 @@
 
 package org.mokee.hardware;
 
-import android.os.SystemProperties;
-
 import org.mokee.internal.util.FileUtils;
 
 /**
@@ -27,8 +25,7 @@ import org.mokee.internal.util.FileUtils;
  */
 public class AdaptiveBacklight {
 
-    private static final String FILE_CABC = SystemProperties.get(
-            "ro.cm.hardware.cabc", "/sys/class/lcd/panel/power_reduce");
+    private static final String FILE_CABC = "/sys/class/lcd/panel/power_reduce";
 
     /**
      * Whether device supports an adaptive backlight technology.
