@@ -53,9 +53,6 @@ struct effect_info_s {
 #define SOUND_TRIGGER_HAL_LIBRARY_PATH "/system/lib/hw/sound_trigger.primary.flounder.so"
 #endif
 
-#define DUALMIC_CONFIG_NONE 0
-#define DUALMIC_CONFIG_1 1
-
 /* Sound devices specific to the platform
  * The DEVICE_OUT_* and DEVICE_IN_* should be mapped to these sound
  * devices to enable corresponding mixer paths
@@ -95,12 +92,8 @@ enum {
     SND_DEVICE_IN_HDMI_MIC,
     SND_DEVICE_IN_BT_SCO_MIC,
     SND_DEVICE_IN_CAMCORDER_MIC,
-    SND_DEVICE_IN_VOICE_DMIC_1,
-    SND_DEVICE_IN_VOICE_SPEAKER_DMIC_1,
     SND_DEVICE_IN_VOICE_REC_HEADSET_MIC,
     SND_DEVICE_IN_VOICE_REC_MIC,
-    SND_DEVICE_IN_VOICE_REC_DMIC_1,
-    SND_DEVICE_IN_VOICE_REC_DMIC_NS_1,
     SND_DEVICE_IN_LOOPBACK_AEC,
     SND_DEVICE_IN_END,
 
@@ -383,7 +376,7 @@ struct audio_device {
     audio_mode_t            mode;
     struct stream_in*       active_input;
     struct stream_out*      primary_output;
-    int                     in_call;
+    bool                    in_call;
     float                   voice_volume;
     bool                    mic_mute;
     bool                    bluetooth_nrec;
@@ -391,7 +384,6 @@ struct audio_device {
     struct listnode         usecase_list;
     bool                    speaker_lr_swap;
     unsigned int            cur_hdmi_channels;
-    int                     dualmic_config;
     bool                    ns_in_voice_rec;
 
     void*                   offload_fx_lib;
