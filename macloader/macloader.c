@@ -2,6 +2,7 @@
  * Copyright (C) 2012, The CyanogenMod Project
  *                     Daniel Hillenbrand <codeworkx@cyanogenmod.com>
  *                     Marco Hillenbrand <marco.hillenbrand@googlemail.com>
+ * Copyright (C) 2017, The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,16 +32,7 @@
 
 #include <cutils/log.h>
 
-#ifndef WIFI_DRIVER_NVRAM_PATH
-#define WIFI_DRIVER_NVRAM_PATH		NULL
-#endif
-
-#ifndef WIFI_DRIVER_NVRAM_PATH_PARAM
-#define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/wlan/parameters/nvram_path"
-#endif
-
-#define MACADDR_PATH "/efs/wifi/.mac.info"
-#define CID_PATH "/data/.cid.info"
+#include <samsung_macloader.h>
 
 enum Type {
     NONE,
@@ -229,7 +221,8 @@ int main() {
     /* semco */
     if (strncasecmp(mac_addr_half, "4c:66:41", 9) == 0 ||
         strncasecmp(mac_addr_half, "51:f6:6b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0) {
+        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0 ||
+        strncasecmp(mac_addr_half, "d8:c4:e9", 9) == 0) {
         type = SEMCO;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef SAMSUNG_POWER_H
-#define SAMSUNG_POWER_H
+#ifndef SAMSUNG_MACLOADER_H
+#define SAMSUNG_MACLOADER_H
 
 /*
  * Board specific nodes
@@ -24,14 +24,17 @@
  * symlink to the locations given here, or override this header in your
  * device tree.
  */
-#define BOOST_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/boost"
-#define BOOSTPULSE_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse"
 
-#define IO_IS_BUSY_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy"
+/* NVRAM calibration, NULL if calibration unneeded */
+#define WIFI_DRIVER_NVRAM_PATH "/system/etc/wifi/nvram_net.txt"
 
-#define CPU0_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq"
-#define CPU0_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
-#define CPU4_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq"
-#define CPU4_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq"
+/* NVRAM calibration parameters */
+#define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/wlan/parameters/nvram_path"
 
-#endif // SAMSUNG_POWER_H
+/* Physical address (MAC) */
+#define MACADDR_PATH "/efs/wifi/.mac.info"
+
+/* Consumer identification number (CID) */
+#define CID_PATH "/data/.cid.info"
+
+#endif // SAMSUNG_MACLOADER_H
