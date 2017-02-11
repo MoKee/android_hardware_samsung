@@ -244,6 +244,27 @@ void set_voice_session_volume(struct voice_session *session, float volume)
     ril_set_call_volume(&session->ril, sound_type, volume);
 }
 
+void set_voice_session_mic_mute(struct voice_session *session, bool state)
+{
+    enum _MuteCondition mute_condition = state ? TX_MUTE : TX_UNMUTE;
+
+    ril_set_mute(&session->ril, mute_condition);
+}
+
+bool voice_session_uses_twomic(struct voice_session *session)
+{
+    if (session->two_mic_disabled) {
+        return false;
+    }
+
+    return session->two_mic_control;
+}
+
+bool voice_session_uses_wideband(struct voice_session *session)
+{
+    return session->wb_amr;
+}
+
 static void voice_session_wb_amr_callback(void *data, int enable)
 {
     struct audio_device *adev = (struct audio_device *)data;

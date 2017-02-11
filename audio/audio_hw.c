@@ -310,8 +310,11 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_OUT_HEADPHONES] = "headphones",
     [SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES] = "speaker-and-headphones",
     [SND_DEVICE_OUT_VOICE_EARPIECE] = "voice-earpiece",
+    [SND_DEVICE_OUT_VOICE_EARPIECE_WB] = "voice-earpiece-wb",
     [SND_DEVICE_OUT_VOICE_SPEAKER] = "voice-speaker",
+    [SND_DEVICE_OUT_VOICE_SPEAKER_WB] = "voice-speaker-wb",
     [SND_DEVICE_OUT_VOICE_HEADPHONES] = "voice-headphones",
+    [SND_DEVICE_OUT_VOICE_HEADPHONES_WB] = "voice-headphones-wb",
     [SND_DEVICE_OUT_HDMI] = "hdmi",
     [SND_DEVICE_OUT_SPEAKER_AND_HDMI] = "speaker-and-hdmi",
     [SND_DEVICE_OUT_BT_SCO] = "bt-sco-headset",
@@ -323,8 +326,13 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_EARPIECE_MIC_AEC] = "earpiece-mic",
     [SND_DEVICE_IN_SPEAKER_MIC_AEC] = "voice-speaker-mic",
     [SND_DEVICE_IN_HEADSET_MIC_AEC] = "headset-mic",
+    [SND_DEVICE_IN_VOICE_MIC] = "voice-mic",
+    [SND_DEVICE_IN_VOICE_EARPIECE_MIC] = "voice-earpiece-mic",
+    [SND_DEVICE_IN_VOICE_EARPIECE_MIC_WB] = "voice-earpiece-mic-wb",
     [SND_DEVICE_IN_VOICE_SPEAKER_MIC] = "voice-speaker-mic",
+    [SND_DEVICE_IN_VOICE_SPEAKER_MIC_WB] = "voice-speaker-mic-wb",
     [SND_DEVICE_IN_VOICE_HEADSET_MIC] = "voice-headset-mic",
+    [SND_DEVICE_IN_VOICE_HEADSET_MIC_WB] = "voice-headset-mic-wb",
     [SND_DEVICE_IN_HDMI_MIC] = "hdmi-mic",
     [SND_DEVICE_IN_BT_SCO_MIC] = "bt-sco-mic",
     [SND_DEVICE_IN_CAMCORDER_MIC] = "camcorder-mic",
@@ -528,13 +536,27 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
         if (devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
             devices & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_OUT_VOICE_HEADPHONES;
-        } else if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_OUT_BT_SCO;
         } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_OUT_VOICE_SPEAKER;
         } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_OUT_EARPIECE;
+            snd_device = SND_DEVICE_OUT_VOICE_EARPIECE;
         }
+
+        if (voice_session_uses_wideband(adev->voice.session)) {
+            if (devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
+                devices & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
+                snd_device = SND_DEVICE_OUT_VOICE_HEADPHONES_WB;
+            } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
+                snd_device = SND_DEVICE_OUT_VOICE_SPEAKER_WB;
+            } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
+                snd_device = SND_DEVICE_OUT_VOICE_EARPIECE_WB;
+            }
+        }
+
+        if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
+            snd_device = SND_DEVICE_OUT_BT_SCO;
+        }
+
         if (snd_device != SND_DEVICE_NONE) {
             goto exit;
         }
@@ -595,9 +617,9 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
     source = (active_input == NULL) ?
                                 AUDIO_SOURCE_DEFAULT : active_input->source;
 
-    in_device = ((active_input == NULL) ?
-                                    AUDIO_DEVICE_NONE : active_input->devices)
-                                & ~AUDIO_DEVICE_BIT_IN;
+    in_device = (active_input == NULL) ?
+                    AUDIO_DEVICE_NONE :
+                    (active_input->devices & ~AUDIO_DEVICE_BIT_IN);
     channel_mask = (active_input == NULL) ?
                                 AUDIO_CHANNEL_IN_MONO : active_input->main_channels;
 
@@ -609,15 +631,35 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             goto exit;
         }
 
-        if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
-                out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
-        } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
+        snd_device = SND_DEVICE_IN_VOICE_MIC;
+        if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_IN_BT_SCO_MIC ;
-        } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
-            snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC;
+            snd_device = SND_DEVICE_IN_BT_SCO_MIC;
+        }
+
+        if (voice_session_uses_twomic(adev->voice.session)) {
+            if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
+                out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
+                snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC;
+            } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
+                snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC;
+            }
+        }
+
+        if (voice_session_uses_wideband(adev->voice.session)) {
+            if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
+                snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC_WB;
+            }
+
+            if (voice_session_uses_twomic(adev->voice.session)) {
+                if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
+                    out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
+                    snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC_WB;
+                } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
+                    snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC_WB;
+                }
+            }
         }
     } else if (source == AUDIO_SOURCE_CAMCORDER) {
         if (in_device & AUDIO_DEVICE_IN_BUILTIN_MIC ||
@@ -3084,29 +3126,46 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         ret = out_get_presentation_offload_position(out, frames, timestamp);
     } else {
+        if (out->dev->voice.in_call) {
+            ALOGVV("%s: in_call, do not handle PCMs", __func__);
+            ret = 0;
+            goto done;
+        }
+
         /* FIXME: which device to read from? */
         if (!list_empty(&out->pcm_dev_list)) {
+            struct pcm_device *pcm_device;
+            struct listnode *node;
             unsigned int avail;
-            struct pcm_device *pcm_device = node_to_item(list_head(&out->pcm_dev_list),
-                                                   struct pcm_device, stream_list_node);
 
-            if (pcm_get_htimestamp(pcm_device->pcm, &avail, timestamp) == 0) {
-                size_t kernel_buffer_size = out->config.period_size * out->config.period_count;
-                int64_t signed_frames = out->written - kernel_buffer_size + avail;
-                /* This adjustment accounts for buffering after app processor.
-                   It is based on estimated DSP latency per use case, rather than exact. */
-                signed_frames -=
-                    (render_latency(out->usecase) * out->sample_rate / 1000000LL);
+            list_for_each(node, &out->pcm_dev_list) {
+                pcm_device = node_to_item(node,
+                                          struct pcm_device,
+                                          stream_list_node);
 
-                /* It would be unusual for this value to be negative, but check just in case ... */
-                if (signed_frames >= 0) {
-                    *frames = signed_frames;
-                    ret = 0;
+                if (pcm_device->pcm != NULL) {
+                    if (pcm_get_htimestamp(pcm_device->pcm, &avail, timestamp) == 0) {
+                        size_t kernel_buffer_size = out->config.period_size * out->config.period_count;
+                        int64_t signed_frames = out->written - kernel_buffer_size + avail;
+                        /* This adjustment accounts for buffering after app processor.
+                           It is based on estimated DSP latency per use case, rather than exact. */
+                        signed_frames -=
+                            (render_latency(out->usecase) * out->sample_rate / 1000000LL);
+
+                        /* It would be unusual for this value to be negative, but check just in case ... */
+                        if (signed_frames >= 0) {
+                            *frames = signed_frames;
+                            ret = 0;
+                            goto done;
+                        }
+                        ret = -1;
+                    }
                 }
             }
         }
     }
 
+done:
     pthread_mutex_unlock(&out->lock);
 
     return ret;
@@ -4021,7 +4080,7 @@ static int adev_set_mic_mute(struct audio_hw_device *dev, bool state)
     adev->mic_mute = state;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        /* TODO */
+        set_voice_session_mic_mute(adev->voice.session, state);
     }
 
     pthread_mutex_unlock(&adev->lock);
