@@ -15,7 +15,7 @@
  */
 
 #define LOG_TAG "audio_hw_voice"
-/*#define LOG_NDEBUG 0*/
+#define LOG_NDEBUG 0
 /*#define VERY_VERY_VERBOSE_LOGGING*/
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
@@ -72,7 +72,7 @@ void set_voice_session_audio_path(struct voice_session *session)
             device_type = SOUND_AUDIO_PATH_SPEAKER;
             break;
         case AUDIO_DEVICE_OUT_EARPIECE:
-            device_type = SOUND_AUDIO_PATH_HANDSET;
+            device_type = SOUND_AUDIO_PATH_EARPIECE;
             break;
         case AUDIO_DEVICE_OUT_WIRED_HEADSET:
             device_type = SOUND_AUDIO_PATH_HEADSET;
@@ -86,8 +86,8 @@ void set_voice_session_audio_path(struct voice_session *session)
             device_type = SOUND_AUDIO_PATH_BLUETOOTH;
             break;
         default:
-            /* if output device isn't supported, use handset by default */
-            device_type = SOUND_AUDIO_PATH_HANDSET;
+            /* if output device isn't supported, use earpiece by default */
+            device_type = SOUND_AUDIO_PATH_EARPIECE;
             break;
     }
 
@@ -401,17 +401,21 @@ struct voice_session *voice_session_init(struct audio_device *adev)
             session->wb_amr = true;
         ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
     } else {
-        /* register callback for wideband AMR setting */
-        ret = ril_set_wb_amr_callback(&session->ril,
-                                      voice_session_wb_amr_callback,
-                                      (void *)adev);
-        if (ret != 0) {
-            ALOGE("%s: Failed to register WB_AMR callback", __func__);
-            free(session);
-            return NULL;
-        }
+        if (RIL_UNSOL_SNDMGR_WB_AMR_REPORT > 0) {
+            /* register callback for wideband AMR setting */
+            ret = ril_set_wb_amr_callback(&session->ril,
+                                          voice_session_wb_amr_callback,
+                                          (void *)adev);
+            if (ret != 0) {
+                ALOGE("%s: Failed to register WB_AMR callback", __func__);
+                free(session);
+                return NULL;
+            }
 
-        ALOGV("%s: Registered WB_AMR callback", __func__);
+            ALOGV("%s: Registered WB_AMR callback", __func__);
+        } else {
+            ALOGV("%s: WB_AMR callback not supported", __func__);
+        }
     }
 
     return session;
