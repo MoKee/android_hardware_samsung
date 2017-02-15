@@ -225,6 +225,7 @@ static const char * const use_case_table[AUDIO_USECASE_MAX] = {
     [USECASE_AUDIO_PLAYBACK] = "playback",
     [USECASE_AUDIO_PLAYBACK_MULTI_CH] = "playback multi-channel",
     [USECASE_AUDIO_PLAYBACK_OFFLOAD] = "compress-offload-playback",
+    [USECASE_AUDIO_PLAYBACK_DEEP_BUFFER] = "playback deep-buffer",
     [USECASE_AUDIO_CAPTURE] = "capture",
     [USECASE_AUDIO_CAPTURE_HOTWORD] = "capture-hotword",
     [USECASE_VOICE_CALL] = "voice-call",
@@ -248,7 +249,6 @@ static const struct string_to_enum out_channels_name_to_enum_table[] = {
 struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
     struct timespec ret;
     int xsec = 0;
-    int sign = 1;
 
     if (time0.tv_nsec > time1.tv_nsec) {
         xsec = (int) ((time0.tv_nsec - time1.tv_nsec) / (1E9 + 1));
@@ -262,14 +262,8 @@ struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
         time0.tv_sec -= xsec;
     }
 
-    ret.tv_sec = time1.tv_sec - time0.tv_sec;
-    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
-
-    if (time1.tv_sec < time0.tv_sec) {
-        sign = -1;
-    }
-
-    ret.tv_sec = ret.tv_sec * sign;
+    ret.tv_sec = abs(time1.tv_sec - time0.tv_sec);
+    ret.tv_nsec = abs(time1.tv_nsec - time0.tv_nsec);
 
     return ret;
 }
@@ -447,7 +441,8 @@ static const char *get_snd_device_name(snd_device_t snd_device)
 {
     const char *name = NULL;
 
-    if (snd_device >= SND_DEVICE_MIN && snd_device < SND_DEVICE_MAX)
+    if (snd_device == SND_DEVICE_NONE ||
+        (snd_device > SND_DEVICE_MIN && snd_device < SND_DEVICE_MAX))
         name = device_table[snd_device];
 
     ALOGE_IF(name == NULL, "%s: invalid snd device %d", __func__, snd_device);
@@ -817,8 +812,8 @@ static int enable_snd_device(struct audio_device *adev,
 #ifdef DSP_POWEROFF_DELAY
         clock_gettime(CLOCK_MONOTONIC, &activation_time);
 
-        elapsed_time = time_spec_diff(mixer_card->dsp_poweroff_time,
-                                      activation_time);
+        elapsed_time = time_spec_diff(activation_time,
+                                      mixer_card->dsp_poweroff_time);
         if (elapsed_time.tv_sec == 0) {
             long elapsed_usec = elapsed_time.tv_nsec / 1000;
 
