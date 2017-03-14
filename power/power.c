@@ -62,7 +62,6 @@ enum power_profile_e {
 };
 
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
-static bool boostpulse_warned = false;
 
 /**********************************************************
  *** HELPER FUNCTIONS
@@ -140,28 +139,31 @@ static void boost(int32_t duration_us)
     close(fd);
 }
 
+static void boostpulse_open(struct samsung_power_module *samsung_pwr)
+{
+    samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
+    if (samsung_pwr->boostpulse_fd < 0) {
+        ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, strerror(errno));
+    }
+}
+
+static void send_boostpulse(int boostpulse_fd)
+{
+    int len;
+
+    if (boostpulse_fd < 0) {
+        return;
+    }
+
+    len = write(boostpulse_fd, "1", 1);
+    if (len < 0) {
+        ALOGE("Error writing to %s: %s", BOOSTPULSE_PATH, strerror(errno));
+    }
+}
+
 /**********************************************************
  *** POWER FUNCTIONS
  **********************************************************/
-
-/* You need to request the powerhal lock before calling this function */
-static int boostpulse_open(struct samsung_power_module *samsung_pwr)
-{
-    char errno_str[64];
-
-    if (samsung_pwr->boostpulse_fd < 0) {
-        samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
-        if (samsung_pwr->boostpulse_fd < 0) {
-            if (!boostpulse_warned) {
-                strerror_r(errno, errno_str, sizeof(errno_str));
-                ALOGE("Error opening %s: %s", BOOSTPULSE_PATH, errno_str);
-                boostpulse_warned = true;
-            }
-        }
-    }
-
-    return samsung_pwr->boostpulse_fd;
-}
 
 static void set_power_profile(struct samsung_power_module *samsung_pwr,
                               int profile)
@@ -207,6 +209,9 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             }
             ALOGV("%s: set performance mode", __func__);
             break;
+        default:
+            ALOGW("%s: Unknown power profile: %d", __func__, profile);
+            return;
     }
 
     current_power_profile = profile;
@@ -406,43 +411,36 @@ static void samsung_power_hint(struct power_module *module,
     char errno_str[64];
     int len;
 
+    /* Bail out if low-power mode is active */
+    if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_SET_PROFILE) {
+        ALOGW("%s: PROFILE_POWER_SAVE active, ignoring hint %d", __func__, hint);
+        return;
+    }
+
     switch (hint) {
-        case POWER_HINT_INTERACTION: {
-            if (current_power_profile == PROFILE_POWER_SAVE) {
-                return;
-            }
-
-            ALOGV("%s: POWER_HINT_INTERACTION", __func__);
-
-            if (boostpulse_open(samsung_pwr) >= 0) {
-                len = write(samsung_pwr->boostpulse_fd, "1", 1);
-
-                if (len < 0) {
-                    strerror_r(errno, errno_str, sizeof(errno_str));
-                    ALOGE("Error writing to %s: %s", BOOSTPULSE_PATH, errno_str);
-                }
-            }
-
-            break;
-        }
-        case POWER_HINT_VSYNC: {
+        case POWER_HINT_VSYNC:
             ALOGV("%s: POWER_HINT_VSYNC", __func__);
             break;
-        }
-#ifdef POWER_HINT_CPU_BOOST
+        case POWER_HINT_INTERACTION:
+            ALOGV("%s: POWER_HINT_INTERACTION", __func__);
+            send_boostpulse(samsung_pwr->boostpulse_fd);
+            break;
+        case POWER_HINT_LOW_POWER:
+            ALOGV("%s: POWER_HINT_LOW_POWER", __func__);
+            set_power_profile(samsung_pwr, PROFILE_POWER_SAVE);
+            break;
+        case POWER_HINT_LAUNCH:
         case POWER_HINT_CPU_BOOST:
+            ALOGV("%s: POWER_HINT_LAUNCH | POWER_HINT_CPU_BOOST", __func__);
             boost((*(int32_t *)data));
             break;
-#endif
-        case POWER_HINT_SET_PROFILE: {
-            int profile = *((intptr_t *)data);
-
+        case POWER_HINT_SET_PROFILE:
             ALOGV("%s: POWER_HINT_SET_PROFILE", __func__);
-
+            int profile = *((intptr_t *)data);
             set_power_profile(samsung_pwr, profile);
             break;
-        }
         default:
+            ALOGW("%s: Unknown power hint: %d", __func__, hint);
             break;
     }
 }
