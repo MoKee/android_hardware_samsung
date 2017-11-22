@@ -1060,8 +1060,11 @@ static int select_devices(struct audio_device *adev,
         if (vc_usecase == NULL) {
             ALOGE("%s: Could not find the voice call usecase", __func__);
         } else {
-            in_snd_device = vc_usecase->in_snd_device;
-            out_snd_device = vc_usecase->out_snd_device;
+            ALOGV("%s: in call, reusing devices (rx: %s, tx: %s)", __func__,
+                  get_snd_device_display_name(vc_usecase->out_snd_device),
+                  get_snd_device_display_name(vc_usecase->in_snd_device));
+            usecase->devices = vc_usecase->devices;
+            return 0;
         }
     }
 
@@ -2885,7 +2888,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             }
         }
 #endif
-        if (val != 0) {
+        if (val != SND_DEVICE_NONE) {
             bool bt_sco_active = false;
 
             if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
@@ -2939,10 +2942,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             }
         }
 
-        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
-                (out == adev->primary_output)) {
-            stop_voice_call(adev);
-        }
         pthread_mutex_unlock(&adev->lock);
         pthread_mutex_unlock(&out->lock);
 #ifdef PREPROCESSING_ENABLED
@@ -4275,6 +4274,10 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
             ALOGE("Failed setting amplifier mode");
         }
         adev->mode = mode;
+
+        if ((mode == AUDIO_MODE_NORMAL) && adev->voice.in_call) {
+            stop_voice_call(adev);
+        }
     }
     pthread_mutex_unlock(&adev->lock);
     return 0;
