@@ -38,6 +38,17 @@
 #include "audience.h"
 #endif
 
+/**
+ * container_of - cast a member of a structure out to the containing structure
+ * @ptr:    the pointer to the member.
+ * @type:   the type of the container struct this is embedded in.
+ * @member: the name of the member within the struct.
+ *
+ */
+#define container_of(ptr, type, member) ({              \
+    void *__mptr = (void *)(ptr);                   \
+    ((type *)((uintptr_t)__mptr - offsetof(type, member))); })
+
 static struct pcm_config pcm_config_voicecall = {
     .channels = 2,
     .rate = 8000,
@@ -57,6 +68,14 @@ static struct pcm_config pcm_config_voicecall_wideband = {
 struct pcm_config pcm_config_voice_sco = {
     .channels = 1,
     .rate = SCO_DEFAULT_SAMPLING_RATE,
+    .period_size = SCO_PERIOD_SIZE,
+    .period_count = SCO_PERIOD_COUNT,
+    .format = PCM_FORMAT_S16_LE,
+};
+
+struct pcm_config pcm_config_voice_sco_wb = {
+    .channels = 1,
+    .rate = SCO_WB_SAMPLING_RATE,
     .period_size = SCO_PERIOD_SIZE,
     .period_count = SCO_PERIOD_COUNT,
     .format = PCM_FORMAT_S16_LE,
@@ -151,6 +170,7 @@ static void stop_voice_session_bt_sco(struct voice_session *session) {
 void start_voice_session_bt_sco(struct voice_session *session)
 {
     struct pcm_config *voice_sco_config;
+    struct voice_data *vdata = container_of(session, struct voice_data, session);
 
     if (session->pcm_sco_rx != NULL || session->pcm_sco_tx != NULL) {
         ALOGW("%s: SCO PCMs already open!\n", __func__);
@@ -159,8 +179,13 @@ void start_voice_session_bt_sco(struct voice_session *session)
 
     ALOGV("%s: Opening SCO PCMs", __func__);
 
-    /* always use 16kHz for SCO */
-    voice_sco_config = &pcm_config_voice_sco;
+    if (vdata->bluetooth_wb) {
+        ALOGV("%s: pcm_config wideband", __func__);
+        voice_sco_config = &pcm_config_voice_sco_wb;
+    } else {
+        ALOGV("%s: pcm_config narrowband", __func__);
+        voice_sco_config = &pcm_config_voice_sco;
+    }
 
     session->pcm_sco_rx = pcm_open(SOUND_CARD,
                                    SOUND_PLAYBACK_SCO_DEVICE,
@@ -358,6 +383,12 @@ bool voice_session_uses_twomic(struct voice_session *session)
 
 bool voice_session_uses_wideband(struct voice_session *session)
 {
+    struct voice_data *vdata = container_of(session, struct voice_data, session);
+
+    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
+        return vdata->bluetooth_wb;
+    }
+
     return session->wb_amr_type >= 1;
 }
 
