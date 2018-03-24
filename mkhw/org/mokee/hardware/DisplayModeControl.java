@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package org.lineageos.hardware;
+package org.mokee.hardware;
 
-import lineageos.hardware.DisplayMode;
-import org.lineageos.internal.util.FileUtils;
+import mokee.hardware.DisplayMode;
+import org.mokee.internal.util.FileUtils;
 
 import java.util.Arrays;
 

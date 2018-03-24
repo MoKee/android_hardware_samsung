@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.lineageos.hardware;
+package org.mokee.hardware;
 
-import org.lineageos.internal.util.FileUtils;
+import org.mokee.internal.util.FileUtils;
 
 /**
  * Adaptive backlight support (this refers to technologies like NVIDIA SmartDimmer,

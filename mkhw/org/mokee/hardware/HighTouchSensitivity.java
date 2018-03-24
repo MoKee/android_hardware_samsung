@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.lineageos.hardware;
+package org.mokee.hardware;
 
 import android.util.Log;
 
-import org.lineageos.internal.util.FileUtils;
+import org.mokee.internal.util.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
