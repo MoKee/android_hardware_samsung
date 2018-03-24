@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.lineageos.hardware;
+package org.mokee.hardware;
 
 import android.os.SystemProperties;
 
-import org.lineageos.internal.util.FileUtils;
+import org.mokee.internal.util.FileUtils;
 
 /**
  * Sunlight Readability Enhancement support, aka Facemelt Mode.
