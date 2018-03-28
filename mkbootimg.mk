@@ -21,7 +21,7 @@ include system/tools/dtbtool/Android.mk
 endif
 
 ifeq ($(strip $(TARGET_CUSTOM_DTBTOOL)),)
-DTBTOOL_NAME := dtbToolLineage
+DTBTOOL_NAME := dtbToolMoKee
 else
 DTBTOOL_NAME := $(TARGET_CUSTOM_DTBTOOL)
 endif
