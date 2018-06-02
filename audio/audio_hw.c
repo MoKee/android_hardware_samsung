@@ -72,7 +72,9 @@ static struct pcm_device_profile pcm_device_playback = {
     .id = SOUND_PLAYBACK_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
 };
 
 static struct pcm_device_profile pcm_device_deep_buffer = {
@@ -90,7 +92,9 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
     .id = SOUND_DEEP_BUFFER_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
 };
 
 static struct pcm_device_profile pcm_device_capture = {
@@ -149,26 +153,6 @@ static struct pcm_device_profile pcm_device_capture_loopback_aec = {
 };
 #endif
 
-static struct pcm_device_profile pcm_device_playback_sco = {
-    .config = {
-        .channels = SCO_DEFAULT_CHANNEL_COUNT,
-        .rate = SCO_DEFAULT_SAMPLING_RATE,
-        .period_size = SCO_PERIOD_SIZE,
-        .period_count = SCO_PERIOD_COUNT,
-        .format = PCM_FORMAT_S16_LE,
-        .start_threshold = SCO_START_THRESHOLD,
-        .stop_threshold = SCO_STOP_THRESHOLD,
-        .silence_threshold = 0,
-        .avail_min = SCO_AVAILABLE_MIN,
-    },
-    .card = SOUND_CARD,
-    .id = SOUND_PLAYBACK_SCO_DEVICE,
-    .type = PCM_PLAYBACK,
-    .devices =
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
-};
-
 static struct pcm_device_profile pcm_device_capture_sco = {
     .config = {
         .channels = SCO_DEFAULT_CHANNEL_COUNT,
@@ -191,7 +175,6 @@ static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
     &pcm_device_capture,
     &pcm_device_capture_low_latency,
-    &pcm_device_playback_sco,
     &pcm_device_capture_sco,
 #ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
     &pcm_device_capture_loopback_aec,
@@ -773,16 +756,11 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
 
         /* BT SCO */
         if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_IN_VOICE_MIC;
 
-            if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
-                if (voice_session_uses_wideband(adev->voice.session)) {
+            if (voice_session_uses_wideband(adev->voice.session)) {
                     snd_device = SND_DEVICE_IN_VOICE_BT_SCO_MIC_WB;
-                } else {
+            } else {
                     snd_device = SND_DEVICE_IN_VOICE_BT_SCO_MIC;
-                }
-            } else if (voice_session_uses_twomic(adev->voice.session)) {
-                snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC;
             }
         }
     } else if (source == AUDIO_SOURCE_CAMCORDER) {
@@ -1000,6 +978,67 @@ int disable_snd_device(struct audio_device *adev,
     return 0;
 }
 
+static void check_and_route_usecases(struct audio_device *adev,
+                                              struct audio_usecase *uc_info,
+                                              usecase_type_t type,
+                                              snd_device_t snd_device)
+{
+    struct listnode *node;
+    struct audio_usecase *usecase;
+    bool switch_device[AUDIO_USECASE_MAX], need_switch = false;
+    snd_device_t usecase_snd_device = SND_DEVICE_NONE;
+    int i;
+
+    /*
+     * This function is to make sure that all the usecases that are active on
+     * the hardware codec backend are always routed to any one device that is
+     * handled by the hardware codec.
+     * For example, if low-latency and deep-buffer usecases are currently active
+     * on speaker and out_set_parameters(headset) is received on low-latency
+     * output, then we have to make sure deep-buffer is also switched to headset or
+     * if audio-record and voice-call usecases are currently
+     * active on speaker(rx) and speaker-mic (tx) and out_set_parameters(earpiece)
+     * is received for voice call then we have to make sure that audio-record
+     * usecase is also switched to earpiece i.e.
+     * because of the limitation that both the devices cannot be enabled
+     * at the same time as they share the same backend.
+     */
+    /* Disable all the usecases on the shared backend other than the
+       specified usecase */
+    for (i = 0; i < AUDIO_USECASE_MAX; i++)
+        switch_device[i] = false;
+
+    list_for_each(node, &adev->usecase_list) {
+        usecase = node_to_item(node, struct audio_usecase, adev_list_node);
+        if (usecase->type != type || usecase == uc_info)
+            continue;
+        usecase_snd_device = (type == PCM_PLAYBACK) ? usecase->out_snd_device :
+                              usecase->in_snd_device;
+        if (usecase_snd_device != snd_device) {
+            ALOGV("%s: Usecase (%s) is active on (%s) - disabling ..",
+                  __func__, use_case_table[usecase->id],
+                  get_snd_device_name(usecase_snd_device));
+            switch_device[usecase->id] = true;
+            need_switch = true;
+        }
+    }
+    if (need_switch) {
+        list_for_each(node, &adev->usecase_list) {
+            usecase = node_to_item(node, struct audio_usecase, adev_list_node);
+            usecase_snd_device = (type == PCM_PLAYBACK) ? usecase->out_snd_device :
+                                  usecase->in_snd_device;
+            if (switch_device[usecase->id]) {
+                disable_snd_device(adev, usecase, usecase_snd_device);
+                enable_snd_device(adev, usecase, snd_device);
+                if (type == PCM_PLAYBACK)
+                    usecase->out_snd_device = snd_device;
+                else
+                    usecase->in_snd_device = snd_device;
+            }
+        }
+    }
+}
+
 static int select_devices(struct audio_device *adev,
                           audio_usecase_t uc_id)
 {
@@ -1099,10 +1138,12 @@ static int select_devices(struct audio_device *adev,
             set_voice_session_audio_path(adev->voice.session);
         }
 
+        check_and_route_usecases(adev, usecase, PCM_PLAYBACK, out_snd_device);
         enable_snd_device(adev, usecase, out_snd_device);
     }
 
     if (in_snd_device != SND_DEVICE_NONE) {
+        check_and_route_usecases(adev, usecase, PCM_CAPTURE, in_snd_device);
         enable_snd_device(adev, usecase, in_snd_device);
     }
 
@@ -2378,14 +2419,6 @@ static int out_close_pcm_devices(struct stream_out *out)
             pcm_close(pcm_device->pcm);
             pcm_device->pcm = NULL;
         }
-        if (pcm_device->resampler) {
-            release_resampler(pcm_device->resampler);
-            pcm_device->resampler = NULL;
-        }
-        if (pcm_device->res_buffer) {
-            free(pcm_device->res_buffer);
-            pcm_device->res_buffer = NULL;
-        }
     }
 
     return 0;
@@ -2407,11 +2440,6 @@ static int out_open_pcm_devices(struct stream_out *out)
         if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
             pcm_device_id = pcm_device_deep_buffer.id;
 
-        if (out->dev->voice.in_call) {
-            ALOGV("%s: in_call, not opening PCMs", __func__);
-            return ret;
-        }
-
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
 
@@ -2423,24 +2451,6 @@ static int out_open_pcm_devices(struct stream_out *out)
             pcm_device->pcm = NULL;
             ret = -EIO;
             goto error_open;
-        }
-        /*
-        * If the stream rate differs from the PCM rate, we need to
-        * create a resampler.
-        */
-        if (out->sample_rate != pcm_device->pcm_profile->config.rate) {
-            ALOGV("%s: create_resampler(), pcm_device_card(%d), pcm_device_id(%d), \
-                    out_rate(%d), device_rate(%d)",__func__,
-                    pcm_device_card, pcm_device_id,
-                    out->sample_rate, pcm_device->pcm_profile->config.rate);
-            ret = create_resampler(out->sample_rate,
-                    pcm_device->pcm_profile->config.rate,
-                    audio_channel_count_from_out_mask(out->channel_mask),
-                    RESAMPLER_QUALITY_DEFAULT,
-                    NULL,
-                    &pcm_device->resampler);
-            pcm_device->res_byte_count = 0;
-            pcm_device->res_buffer = NULL;
         }
     }
     return ret;
@@ -3020,9 +3030,8 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
     ssize_t ret = 0;
     struct pcm_device *pcm_device;
     struct listnode *node;
-    size_t frame_size = audio_stream_out_frame_size(stream);
-    size_t frames_wr = 0, frames_rq = 0;
 #ifdef PREPROCESSING_ENABLED
+    size_t frame_size = audio_stream_out_frame_size(stream);
     size_t in_frames = bytes / frame_size;
     size_t out_frames = in_frames;
     struct stream_in *in = NULL;
@@ -3118,24 +3127,6 @@ false_alarm:
             memset((void *)buffer, 0, bytes);
         list_for_each(node, &out->pcm_dev_list) {
             pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-            if (pcm_device->resampler) {
-                if (bytes * pcm_device->pcm_profile->config.rate / out->sample_rate + frame_size
-                        > pcm_device->res_byte_count) {
-                    pcm_device->res_byte_count =
-                        bytes * pcm_device->pcm_profile->config.rate / out->sample_rate + frame_size;
-                    pcm_device->res_buffer =
-                        realloc(pcm_device->res_buffer, pcm_device->res_byte_count);
-                    ALOGV("%s: resampler res_byte_count = %zu", __func__,
-                        pcm_device->res_byte_count);
-                }
-                frames_rq = bytes / frame_size;
-                frames_wr = pcm_device->res_byte_count / frame_size;
-                ALOGVV("%s: resampler request frames = %d frame_size = %d",
-                    __func__, frames_rq, frame_size);
-                pcm_device->resampler->resample_from_input(pcm_device->resampler,
-                    (int16_t *)buffer, &frames_rq, (int16_t *)pcm_device->res_buffer, &frames_wr);
-                ALOGVV("%s: resampler output frames_= %d", __func__, frames_wr);
-            }
             if (pcm_device->pcm) {
 #ifdef PREPROCESSING_ENABLED
                 if (out->echo_reference != NULL && pcm_device->pcm_profile->devices != SND_DEVICE_OUT_SPEAKER) {
@@ -3148,12 +3139,7 @@ false_alarm:
                  }
 #endif
                 ALOGVV("%s: writing buffer (%d bytes) to pcm device", __func__, bytes);
-                if (pcm_device->resampler && pcm_device->res_buffer)
-                    pcm_device->status =
-                        pcm_write(pcm_device->pcm, (void *)pcm_device->res_buffer,
-                            frames_wr * frame_size);
-                else
-                    pcm_device->status = pcm_write(pcm_device->pcm, (void *)buffer, bytes);
+                pcm_device->status = pcm_write(pcm_device->pcm, (void *)buffer, bytes);
                 if (pcm_device->status != 0)
                     ret = pcm_device->status;
             }
@@ -3257,12 +3243,6 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         ret = out_get_presentation_offload_position(out, frames, timestamp);
     } else {
-        if (out->dev->voice.in_call) {
-            ALOGVV("%s: in_call, do not handle PCMs", __func__);
-            ret = 0;
-            goto done;
-        }
-
         /* FIXME: which device to read from? */
         if (!list_empty(&out->pcm_dev_list)) {
             struct pcm_device *pcm_device;
