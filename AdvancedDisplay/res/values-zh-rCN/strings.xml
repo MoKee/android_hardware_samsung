@@ -16,13 +16,40 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">高级显示</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">屏幕</string>
-  <string name="screen_colors_title">颜色</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">场景</string>
-  <string name="mdnie_scenario_summary_head">设置 mDNIe 场景</string>
-  <string name="mdnie_negative_title_head">负极模式</string>
-  <string name="mdnie_negative_summary_head">启用/禁用反色</string>
+    <string name="app_name">高级显示设置</string>
+
+    <!-- Screen Preference -->
+    <string name="category_screen_title">屏幕</string>
+    <string name="screen_colors_title">颜色</string>
+
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">场景</string>
+    <string name="mdnie_scenario_summary_head">设置 mDNIe 场景</string>
+    <string name="mdnie_accessibility_title_head">无障碍显示模式</string>
+    <string name="mdnie_accessibility_summary_head">设置 mDNIe 无障碍显示模式 mode</string>
+
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">自适应模式 (默认)</string>
+    <string name="mdnie_scenario_video">影像模式</string>
+    <string name="mdnie_scenario_video_warm">影像模式 (温)</string>
+    <string name="mdnie_scenario_video_cold">影像模式 (冷)</string>
+    <string name="mdnie_scenario_camera">相机模式</string>
+    <string name="mdnie_scenario_navigation">导航模式</string>
+    <string name="mdnie_scenario_gallery">图库模式</string>
+    <string name="mdnie_scenario_vt">视频通话模式</string>
+    <string name="mdnie_scenario_browser">浏览器模式</string>
+    <string name="mdnie_scenario_ebook">电子书模式</string>
+    <string name="mdnie_scenario_email">电子邮件模式</string>
+    <string name="mdnie_scenario_tdmb">数字电视模式</string>
+
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">正常</string>
+    <string name="mdnie_accessibility_inverse">反色</string>
+    <string name="mdnie_accessibility_color_blind">色盲模式</string>
+    <string name="mdnie_accessibility_screen_curtain">黑屏模式</string>
+    <string name="mdnie_accessibility_grayscale">灰阶模式</string>
+    <string name="mdnie_accessibility_gray_negative">反色灰阶</string>
+
+    <string name="mdnie_negative_title_head">负极模式</string>
+    <string name="mdnie_negative_summary_head">启用/禁用反色</string>
 </resources>

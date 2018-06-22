@@ -16,11 +16,40 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <string name="category_screen_title">螢幕</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">場景</string>
-  <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
+    <string name="app_name">進階顯示設定</string>
+
+    <!-- Screen Preference -->
+    <string name="category_screen_title">螢幕</string>
+    <string name="screen_colors_title">顏色</string>
+
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">場景</string>
+    <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
+    <string name="mdnie_accessibility_title_head">無障礙屏幕模式</string>
+    <string name="mdnie_accessibility_summary_head">設定 mDNIe 無障礙屏幕模式</string>
+
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">最佳化顯示 (默认)</string>
+    <string name="mdnie_scenario_video">電影模式</string>
+    <string name="mdnie_scenario_video_warm">電影模式 (温)</string>
+    <string name="mdnie_scenario_video_cold">電影模式 (冷)</string>
+    <string name="mdnie_scenario_camera">相機模式</string>
+    <string name="mdnie_scenario_navigation">導航模式</string>
+    <string name="mdnie_scenario_gallery">相片模式</string>
+    <string name="mdnie_scenario_vt">視像通話模式</string>
+    <string name="mdnie_scenario_browser">瀏覽器模式</string>
+    <string name="mdnie_scenario_ebook">電子書模式</string>
+    <string name="mdnie_scenario_email">電子郵件模式</string>
+    <string name="mdnie_scenario_tdmb">數碼電視模式</string>
+
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">正常</string>
+    <string name="mdnie_accessibility_inverse">負片模式</string>
+    <string name="mdnie_accessibility_color_blind">色盲模式</string>
+    <string name="mdnie_accessibility_screen_curtain">黑屏模式</string>
+    <string name="mdnie_accessibility_grayscale">灰階模式</string>
+    <string name="mdnie_accessibility_gray_negative">負片灰階</string>
+
   <string name="mdnie_negative_title_head">負片模式</string>
-  <string name="mdnie_negative_summary_head">啟用/停用反向顏色</string>
+  <string name="mdnie_negative_summary_head">啟用/停用反轉顏色</string>
 </resources>
