@@ -42,5 +42,9 @@
   <!-- Accessibility mode names -->
   <string name="mdnie_accessibility_normal">Normální</string>
   <string name="mdnie_accessibility_inverse">Obrácené</string>
+  <string name="mdnie_accessibility_color_blind">Barvoslepost</string>
+  <string name="mdnie_accessibility_screen_curtain">Záclony v obraze</string>
+  <string name="mdnie_accessibility_grayscale">Šedý zákal</string>
+  <string name="mdnie_accessibility_gray_negative">Obrácený šedý zákal</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
