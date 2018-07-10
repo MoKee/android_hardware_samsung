@@ -42,6 +42,9 @@
   <!-- Accessibility mode names -->
   <string name="mdnie_accessibility_normal">Normale</string>
   <string name="mdnie_accessibility_inverse">Invertito</string>
+  <string name="mdnie_accessibility_color_blind">Modalità daltonico</string>
+  <string name="mdnie_accessibility_screen_curtain">Modalità schermo nero</string>
   <string name="mdnie_accessibility_grayscale">Grigio</string>
+  <string name="mdnie_accessibility_gray_negative">Grigio invertito</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

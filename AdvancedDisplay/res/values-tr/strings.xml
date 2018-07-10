@@ -27,6 +27,7 @@
   <string name="mdnie_accessibility_title_head">Erişilebilirlik modu</string>
   <string name="mdnie_accessibility_summary_head">MDNie ile erişilebilirlik modunu ayarlayın</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_ui">MoKee (varsayılan)</string>
   <string name="mdnie_scenario_video">Video</string>
   <string name="mdnie_scenario_video_warm">Video sıcak</string>
   <string name="mdnie_scenario_video_cold">Video soğuk</string>

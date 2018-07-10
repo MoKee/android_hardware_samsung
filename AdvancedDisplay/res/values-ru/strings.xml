@@ -43,7 +43,7 @@
   <string name="mdnie_accessibility_normal">Обычный</string>
   <string name="mdnie_accessibility_inverse">Инверсия</string>
   <string name="mdnie_accessibility_color_blind">Дальтонизм</string>
-  <string name="mdnie_accessibility_screen_curtain">Край экрана</string>
+  <string name="mdnie_accessibility_screen_curtain">Вырез на экране</string>
   <string name="mdnie_accessibility_grayscale">Серый</string>
   <string name="mdnie_accessibility_gray_negative">Инвертация серого цвета</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
