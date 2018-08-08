@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">Режим специальных возможностей</string>
   <string name="mdnie_accessibility_summary_head">Настроить режим специальных возможностей mDNIe</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (по умолчанию)</string>
+  <string name="mdnie_scenario_ui">MoKee (по умолчанию)</string>
   <string name="mdnie_scenario_video">Фильм</string>
   <string name="mdnie_scenario_video_warm">Фильм (теплые тона)</string>
   <string name="mdnie_scenario_video_cold">Фильм (холодные тона)</string>

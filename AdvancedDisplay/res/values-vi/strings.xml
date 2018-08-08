@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">Chế độ trợ năng</string>
   <string name="mdnie_accessibility_summary_head">Cài đặt chế độ trợ năng mDNIe</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (mặc định)</string>
+  <string name="mdnie_scenario_ui">MoKee (mặc định)</string>
   <string name="mdnie_scenario_video">Video</string>
   <string name="mdnie_scenario_video_warm">Video ấm</string>
   <string name="mdnie_scenario_video_cold">Video lạnh</string>

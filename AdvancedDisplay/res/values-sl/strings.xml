@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">Način dostopnosti</string>
   <string name="mdnie_accessibility_summary_head">Nastavite način dostopnosti mDNIe</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (privzeto)</string>
+  <string name="mdnie_scenario_ui">MoKee (privzeto)</string>
   <string name="mdnie_scenario_video">Video</string>
   <string name="mdnie_scenario_video_warm">Topel videoposnetek</string>
   <string name="mdnie_scenario_video_cold">Hladen videoposnetek</string>

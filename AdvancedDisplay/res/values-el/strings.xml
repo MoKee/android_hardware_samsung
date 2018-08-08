@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">Λειτουργία προσβασιμότητας</string>
   <string name="mdnie_accessibility_summary_head">Ορίστε τη λειτουργία προσβασιμότητας mDNIe</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (προεπιλογή)</string>
+  <string name="mdnie_scenario_ui">MoKee (προεπιλογή)</string>
   <string name="mdnie_scenario_video">Βίντεο</string>
   <string name="mdnie_scenario_video_warm">Θερμό βίντεο</string>
   <string name="mdnie_scenario_video_cold">Ψυχρό βίντεο</string>

@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">アクセシビリティモード</string>
   <string name="mdnie_accessibility_summary_head">mDNIe アクセシビリティモードを設定します</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS（デフォルト）</string>
+  <string name="mdnie_scenario_ui">MoKee（デフォルト）</string>
   <string name="mdnie_scenario_video">ビデオ</string>
   <string name="mdnie_scenario_video_warm">ビデオ（暖色）</string>
   <string name="mdnie_scenario_video_cold">ビデオ（寒色）</string>

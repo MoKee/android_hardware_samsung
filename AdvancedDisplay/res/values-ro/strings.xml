@@ -27,7 +27,7 @@
   <string name="mdnie_accessibility_title_head">Mod accesibilitate</string>
   <string name="mdnie_accessibility_summary_head">Setaţi modul de accesibilitate mDNIe</string>
   <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (implicit)</string>
+  <string name="mdnie_scenario_ui">MoKee (implicit)</string>
   <string name="mdnie_scenario_video">Video</string>
   <string name="mdnie_scenario_video_warm">Video cald</string>
   <string name="mdnie_scenario_video_cold">Video rece</string>
