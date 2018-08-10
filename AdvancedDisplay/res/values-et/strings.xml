@@ -25,6 +25,7 @@
   <string name="mdnie_scenario_title_head">Stsenaarium</string>
   <string name="mdnie_scenario_summary_head">Seadke mDNIe stsenaarium</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Kaamera</string>
   <!-- Accessibility mode names -->
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

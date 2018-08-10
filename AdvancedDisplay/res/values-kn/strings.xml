@@ -26,5 +26,6 @@
   <string name="mdnie_scenario_summary_head">mDNIe ಸನ್ನಿವೇಶವನ್ನು ಹೊಂದಿಸಿ</string>
   <!-- Scenario names -->
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">ಸಾಮಾನ್ಯ</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

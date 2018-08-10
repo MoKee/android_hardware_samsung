@@ -25,6 +25,7 @@
   <string name="mdnie_scenario_title_head">Zeenario</string>
   <string name="mdnie_scenario_summary_head">mDNIe-Zeenario auswielen</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Fotoapparat</string>
   <!-- Accessibility mode names -->
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

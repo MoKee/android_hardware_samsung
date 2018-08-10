@@ -26,5 +26,6 @@
   <string name="mdnie_scenario_summary_head">mDNIe ଦୃଶ୍ୟପଟ ସେଟ୍‍ କରନ୍ତୁ</string>
   <!-- Scenario names -->
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">ସାଧାରଣ</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

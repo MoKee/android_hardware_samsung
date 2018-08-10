@@ -25,6 +25,7 @@
   <string name="mdnie_scenario_title_head">خط مشی</string>
   <string name="mdnie_scenario_summary_head">تنظیم خط مشی mDNIe</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">دوربین</string>
   <!-- Accessibility mode names -->
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

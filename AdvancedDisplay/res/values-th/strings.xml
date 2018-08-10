@@ -25,6 +25,8 @@
   <string name="mdnie_scenario_title_head">สถานการณ์</string>
   <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">กล้องถ่ายรูป</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">ปกติ</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

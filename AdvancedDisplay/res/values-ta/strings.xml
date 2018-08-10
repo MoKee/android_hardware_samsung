@@ -26,5 +26,6 @@
   <string name="mdnie_scenario_summary_head">mDNIe சூழ்நிலையை அமை</string>
   <!-- Scenario names -->
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">இயல்பு</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -22,9 +22,11 @@
   <string name="category_screen_title">Skärm</string>
   <string name="screen_colors_title">Färger</string>
   <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenario</string>
   <string name="mdnie_scenario_summary_head">Ställ in mDNIe-scenario</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Kamera</string>
+  <string name="mdnie_scenario_gallery">Galleri</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normal</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -25,6 +25,8 @@
   <string name="mdnie_scenario_title_head">Сценарио</string>
   <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Камера</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Нормално</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

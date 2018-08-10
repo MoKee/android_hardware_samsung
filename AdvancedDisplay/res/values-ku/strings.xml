@@ -25,6 +25,7 @@
   <string name="mdnie_scenario_title_head">سیناریۆ</string>
   <string name="mdnie_scenario_summary_head">دانانی دۆخی mDNIe سیناریۆ</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">کامێرا</string>
   <!-- Accessibility mode names -->
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

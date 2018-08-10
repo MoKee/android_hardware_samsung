@@ -26,11 +26,12 @@
   <string name="mdnie_scenario_summary_head">Setel skenario mDNIe</string>
   <!-- Scenario names -->
   <string name="mdnie_scenario_ui">MoKee (standar)</string>
-  <string name="mdnie_scenario_video">Video</string>
   <string name="mdnie_scenario_camera">Kamera</string>
   <string name="mdnie_scenario_navigation">Navigasi</string>
   <string name="mdnie_scenario_gallery">Galeri</string>
   <string name="mdnie_scenario_vt">Panggilan video</string>
+  <string name="mdnie_scenario_browser">Browser</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Keadaan normal</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

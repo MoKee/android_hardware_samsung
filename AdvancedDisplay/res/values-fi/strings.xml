@@ -25,6 +25,10 @@
   <string name="mdnie_scenario_title_head">Skenaario</string>
   <string name="mdnie_scenario_summary_head">Aseta mDNIe-skenaario</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Kamera</string>
+  <string name="mdnie_scenario_gallery">Galleria</string>
+  <string name="mdnie_scenario_browser">Selain</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normaali</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

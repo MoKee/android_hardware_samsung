@@ -25,6 +25,8 @@
   <string name="mdnie_scenario_title_head">Scenarie</string>
   <string name="mdnie_scenario_summary_head">Angiv mDNIe-scenariet</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Kamera</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normal</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

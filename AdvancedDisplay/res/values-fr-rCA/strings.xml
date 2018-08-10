@@ -17,9 +17,18 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">Affichage avancé</string>
   <!-- Screen Preference -->
+  <string name="category_screen_title">Écran</string>
+  <string name="screen_colors_title">Couleurs</string>
   <!-- mDNIe -->
+  <string name="mdnie_scenario_title_head">Scénario</string>
+  <string name="mdnie_scenario_summary_head">Définir le scénario mDNIe</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Appareil photo</string>
+  <string name="mdnie_scenario_gallery">Galerie</string>
+  <string name="mdnie_scenario_browser">Navigateur</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Standard</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

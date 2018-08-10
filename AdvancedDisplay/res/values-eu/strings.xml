@@ -26,5 +26,6 @@
   <string name="mdnie_scenario_summary_head">mDNIe eszenatokia ezarri</string>
   <!-- Scenario names -->
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Arrunta</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

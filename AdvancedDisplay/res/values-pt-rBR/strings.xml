@@ -25,6 +25,10 @@
   <string name="mdnie_scenario_title_head">Cenário</string>
   <string name="mdnie_scenario_summary_head">Define o cenário mDNIe</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_camera">Câmera</string>
+  <string name="mdnie_scenario_gallery">Galeria</string>
+  <string name="mdnie_scenario_browser">Navegador</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normal</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -28,7 +28,7 @@
   <string name="mdnie_accessibility_summary_head">設定 mDNIe 無障礙模式</string>
   <!-- Scenario names -->
   <string name="mdnie_scenario_ui">MoKee (預設)</string>
-  <string name="mdnie_scenario_video">視訊</string>
+  <string name="mdnie_scenario_video">影片</string>
   <string name="mdnie_scenario_video_warm">影片 (暖色)</string>
   <string name="mdnie_scenario_video_cold">影片 (冷色)</string>
   <string name="mdnie_scenario_camera">相機</string>
@@ -41,10 +41,10 @@
   <string name="mdnie_scenario_tdmb">數位電視</string>
   <!-- Accessibility mode names -->
   <string name="mdnie_accessibility_normal">一般</string>
-  <string name="mdnie_accessibility_inverse">負片</string>
+  <string name="mdnie_accessibility_inverse">負片模式</string>
   <string name="mdnie_accessibility_color_blind">色盲模式</string>
   <string name="mdnie_accessibility_screen_curtain">黑屏模式</string>
-  <string name="mdnie_accessibility_grayscale">灰色</string>
+  <string name="mdnie_accessibility_grayscale">灰階模式</string>
   <string name="mdnie_accessibility_gray_negative">負片灰階</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
