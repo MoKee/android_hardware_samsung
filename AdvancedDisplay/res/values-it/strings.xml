@@ -29,8 +29,8 @@
   <!-- Scenario names -->
   <string name="mdnie_scenario_ui">MoKee (predefinito)</string>
   <string name="mdnie_scenario_video">Video</string>
-  <string name="mdnie_scenario_video_warm">Video caldo</string>
-  <string name="mdnie_scenario_video_cold">Video freddo</string>
+  <string name="mdnie_scenario_video_warm">Toni caldi</string>
+  <string name="mdnie_scenario_video_cold">Toni freddi</string>
   <string name="mdnie_scenario_camera">Fotocamera</string>
   <string name="mdnie_scenario_navigation">Navigazione</string>
   <string name="mdnie_scenario_gallery">Galleria</string>
@@ -43,7 +43,7 @@
   <string name="mdnie_accessibility_normal">Normale</string>
   <string name="mdnie_accessibility_inverse">Invertito</string>
   <string name="mdnie_accessibility_color_blind">Modalità daltonico</string>
-  <string name="mdnie_accessibility_screen_curtain">Modalità schermo nero</string>
+  <string name="mdnie_accessibility_screen_curtain">Modalità schermo oscurato</string>
   <string name="mdnie_accessibility_grayscale">Grigio</string>
   <string name="mdnie_accessibility_gray_negative">Grigio invertito</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
