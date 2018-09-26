@@ -36,5 +36,6 @@
   <string name="mdnie_scenario_ebook">전자책</string>
   <string name="mdnie_scenario_email">이메일</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">일반</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
