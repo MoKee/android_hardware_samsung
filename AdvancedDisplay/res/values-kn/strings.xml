@@ -27,6 +27,7 @@
   <!-- Scenario names -->
   <string name="mdnie_scenario_camera">ಕ್ಯಾಮರಾ</string>
   <string name="mdnie_scenario_gallery">ಗ್ಯಾಲರಿ</string>
+  <string name="mdnie_scenario_browser">ಬ್ರೌಸರ್</string>
   <!-- Accessibility mode names -->
   <string name="mdnie_accessibility_normal">ಸಾಮಾನ್ಯ</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
