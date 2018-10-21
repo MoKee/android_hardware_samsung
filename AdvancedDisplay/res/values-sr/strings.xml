@@ -17,16 +17,14 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Напредни екран</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Екран</string>
-  <string name="screen_colors_title">Боје</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Сценарио</string>
-  <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_camera">Камера</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">Нормално</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Напредни екран</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Екран</string>
+    <string name="screen_colors_title">Боје</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Сценарио</string>
+    <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
+    <!-- Scenario names -->
+    <!-- Accessibility mode names -->
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

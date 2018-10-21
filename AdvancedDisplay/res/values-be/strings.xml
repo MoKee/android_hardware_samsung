@@ -17,34 +17,14 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Налады экрана</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Экран</string>
-  <string name="screen_colors_title">Колеры</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Сцэнар</string>
-  <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
-  <string name="mdnie_accessibility_title_head">Рэжым даступнасці</string>
-  <string name="mdnie_accessibility_summary_head">Усталяваць рэжым даступнасці mDNIe</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">MoKee (па змаўчанні)</string>
-  <string name="mdnie_scenario_video">Відэа</string>
-  <string name="mdnie_scenario_video_warm">Відэа (цёплыя тоны)</string>
-  <string name="mdnie_scenario_video_cold">Відэа (халод. тоны)</string>
-  <string name="mdnie_scenario_camera">Камера</string>
-  <string name="mdnie_scenario_navigation">Навігацыя</string>
-  <string name="mdnie_scenario_gallery">Галерэя</string>
-  <string name="mdnie_scenario_vt">Відэавыклік</string>
-  <string name="mdnie_scenario_browser">Браўзэр</string>
-  <string name="mdnie_scenario_ebook">электронная кніга</string>
-  <string name="mdnie_scenario_email">E-mail</string>
-  <string name="mdnie_scenario_tdmb">Лічбавае тэлебачанне</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">Звычайны</string>
-  <string name="mdnie_accessibility_inverse">Інверсія</string>
-  <string name="mdnie_accessibility_color_blind">Барваслепасць</string>
-  <string name="mdnie_accessibility_screen_curtain">Выраз на экране</string>
-  <string name="mdnie_accessibility_grayscale">Шэры</string>
-  <string name="mdnie_accessibility_gray_negative">Інвертацыя шэрага колеру</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Налады экрана</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Экран</string>
+    <string name="screen_colors_title">Колеры</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Сцэнар</string>
+    <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
+    <!-- Scenario names -->
+    <!-- Accessibility mode names -->
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
