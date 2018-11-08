@@ -25,6 +25,8 @@
     <string name="mdnie_scenario_title_head">Scenarij</string>
     <string name="mdnie_scenario_summary_head">Podesite mDNIe scenarij</string>
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">Fotoaparat</string>
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normalan</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

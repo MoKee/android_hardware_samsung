@@ -26,5 +26,6 @@
     <string name="mdnie_scenario_summary_head">Vendos skenarin mDNIe</string>
     <!-- Scenario names -->
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normale</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

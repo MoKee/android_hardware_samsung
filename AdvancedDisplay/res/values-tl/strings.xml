@@ -18,8 +18,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Screen Preference -->
+    <string name="screen_colors_title">Mga kulay</string>
     <!-- mDNIe -->
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">Ang kamera</string>
+    <string name="mdnie_scenario_gallery">Gallery</string>
+    <string name="mdnie_scenario_browser">Browser</string>
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Karaniwan</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

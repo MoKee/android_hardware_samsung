@@ -20,6 +20,9 @@
     <!-- Screen Preference -->
     <!-- mDNIe -->
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_gallery">Galeri</string>
+    <string name="mdnie_scenario_browser">Pelayar</string>
     <!-- Accessibility mode names -->
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

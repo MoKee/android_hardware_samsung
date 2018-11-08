@@ -20,6 +20,7 @@
     <!-- Screen Preference -->
     <!-- mDNIe -->
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">कैमरा</string>
     <!-- Accessibility mode names -->
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

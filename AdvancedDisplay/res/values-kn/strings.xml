@@ -25,6 +25,10 @@
     <string name="mdnie_scenario_title_head">ಸನ್ನಿವೇಶ</string>
     <string name="mdnie_scenario_summary_head">mDNIe ಸನ್ನಿವೇಶವನ್ನು ಹೊಂದಿಸಿ</string>
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">ಕ್ಯಾಮರಾ</string>
+    <string name="mdnie_scenario_gallery">ಗ್ಯಾಲರಿ</string>
+    <string name="mdnie_scenario_browser">ಬ್ರೌಸರ್</string>
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">ಸಾಮಾನ್ಯ</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

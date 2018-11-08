@@ -25,6 +25,7 @@
     <string name="mdnie_scenario_title_head">Ekran rejimi</string>
     <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">Kamera</string>
     <!-- Accessibility mode names -->
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

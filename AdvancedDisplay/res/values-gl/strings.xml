@@ -36,11 +36,9 @@
     <string name="mdnie_scenario_gallery">Galería</string>
     <string name="mdnie_scenario_vt">Videochamada</string>
     <string name="mdnie_scenario_browser">Navegador</string>
-    <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">Correo electrónico</string>
     <string name="mdnie_scenario_tdmb">Televisión dixital</string>
     <!-- Accessibility mode names -->
-    <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertido</string>
     <string name="mdnie_accessibility_color_blind">Daltónico</string>
     <string name="mdnie_accessibility_screen_curtain">Cortina de pantalla</string>

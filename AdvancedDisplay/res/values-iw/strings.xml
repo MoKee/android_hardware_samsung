@@ -25,6 +25,8 @@
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
     <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">מצלמה</string>
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">רגיל</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

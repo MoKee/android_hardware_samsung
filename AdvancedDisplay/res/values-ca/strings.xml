@@ -20,7 +20,6 @@
     <string name="app_name">Pantalla avançada</string>
     <!-- Screen Preference -->
     <string name="category_screen_title">Pantalla</string>
-    <string name="screen_colors_title">Colors</string>
     <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Escenari</string>
     <string name="mdnie_scenario_summary_head">Estableix l\'escenari de mDNIe</string>
@@ -36,11 +35,9 @@
     <string name="mdnie_scenario_gallery">Galeria</string>
     <string name="mdnie_scenario_vt">Vídeotrucada</string>
     <string name="mdnie_scenario_browser">Navegador</string>
-    <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">Correu</string>
     <string name="mdnie_scenario_tdmb">Televisió digital</string>
     <!-- Accessibility mode names -->
-    <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertit</string>
     <string name="mdnie_accessibility_color_blind">Daltònic</string>
     <string name="mdnie_accessibility_screen_curtain">Cortina de pantalla</string>

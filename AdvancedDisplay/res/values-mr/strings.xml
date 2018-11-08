@@ -26,5 +26,6 @@
     <string name="mdnie_scenario_summary_head">mDNIe परिस्थिती सेट करा</string>
     <!-- Scenario names -->
     <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">सामान्य</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
