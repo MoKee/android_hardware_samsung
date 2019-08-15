@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">mDNIe-senario ynstelle</string>
     <string name="mdnie_accessibility_title_head">Tagonklikheidsmodus</string>
     <string name="mdnie_accessibility_summary_head">Stel de mDNIe-tagonklikheidsmodus yn</string>
-    <string name="mdnie_scenario_ui">LineageOS (standert)</string>
+    <string name="mdnie_scenario_ui">MoKee (standert)</string>
     <string name="mdnie_scenario_video">Fideo</string>
     <string name="mdnie_scenario_video_warm">Fideo (waarm)</string>
     <string name="mdnie_scenario_video_cold">Fideo (kâld)</string>

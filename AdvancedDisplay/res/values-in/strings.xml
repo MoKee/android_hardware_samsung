@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Setel skenario mDNIe</string>
     <string name="mdnie_accessibility_title_head">Modus aksesibilitas</string>
     <string name="mdnie_accessibility_summary_head">Setel modus aksesibilitas mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (standar)</string>
+    <string name="mdnie_scenario_ui">MoKee (standar)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video (warna hangat)</string>
     <string name="mdnie_scenario_video_cold">Video (warna sejuk)</string>

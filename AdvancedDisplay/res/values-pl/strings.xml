@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Ustaw scenariusz mDNIe</string>
     <string name="mdnie_accessibility_title_head">Ułatwienia dostępu</string>
     <string name="mdnie_accessibility_summary_head">Ustaw tryb dostępności mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (domyślnie)</string>
+    <string name="mdnie_scenario_ui">MoKee (domyślnie)</string>
     <string name="mdnie_scenario_video">Wideo</string>
     <string name="mdnie_scenario_video_warm">Ciepły film</string>
     <string name="mdnie_scenario_video_cold">Zimny film</string>

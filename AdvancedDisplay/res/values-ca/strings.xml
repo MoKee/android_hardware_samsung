@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Estableix l\'escenari de mDNIe</string>
     <string name="mdnie_accessibility_title_head">Mode d\'accessibilitat</string>
     <string name="mdnie_accessibility_summary_head">Estableix el mode d\'accessibilitat mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (per defecte)</string>
+    <string name="mdnie_scenario_ui">MoKee (per defecte)</string>
     <string name="mdnie_scenario_video">Vídeo</string>
     <string name="mdnie_scenario_video_warm">Vídeo càlid</string>
     <string name="mdnie_scenario_video_cold">Vídeo fred</string>

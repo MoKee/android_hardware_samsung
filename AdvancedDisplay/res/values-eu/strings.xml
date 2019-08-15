@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">mDNIe eszenatokia ezarri</string>
     <string name="mdnie_accessibility_title_head">Irisgarritasun modua</string>
     <string name="mdnie_accessibility_summary_head">Ezarri mDNIe irisgarritasun modua</string>
-    <string name="mdnie_scenario_ui">LineageOS (lehenetsia)</string>
+    <string name="mdnie_scenario_ui">MoKee (lehenetsia)</string>
     <string name="mdnie_scenario_video">Bideoa</string>
     <string name="mdnie_scenario_video_warm">Bideo epela</string>
     <string name="mdnie_scenario_video_cold">Bideo hotza</string>

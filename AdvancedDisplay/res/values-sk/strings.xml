@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Nastaviť scenár mDNIe</string>
     <string name="mdnie_accessibility_title_head">Režim uľahčenia ovládania</string>
     <string name="mdnie_accessibility_summary_head">Nastavenie režimu uľahčenia ovládania mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (predvolené)</string>
+    <string name="mdnie_scenario_ui">MoKee (predvolené)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video (teplé tóny)</string>
     <string name="mdnie_scenario_video_cold">Video (studené tóny)</string>

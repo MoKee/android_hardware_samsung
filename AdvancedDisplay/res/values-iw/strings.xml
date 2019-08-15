@@ -23,7 +23,7 @@
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
     <string name="mdnie_accessibility_title_head">מצב נגישות</string>
-    <string name="mdnie_scenario_ui">LineageOS (ברירת מחדל)</string>
+    <string name="mdnie_scenario_ui">MoKee (ברירת מחדל)</string>
     <string name="mdnie_scenario_video">וידאו</string>
     <string name="mdnie_scenario_video_warm">וידאו חם</string>
     <string name="mdnie_scenario_video_cold">וידאו קר</string>

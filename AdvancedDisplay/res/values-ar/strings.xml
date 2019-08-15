@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">تعيين السيناريو mDNIe</string>
     <string name="mdnie_accessibility_title_head">وضع إمكانية الوصول</string>
     <string name="mdnie_accessibility_summary_head">قم بتعيين وضع إمكانية الوصول mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (الافتراضي)</string>
+    <string name="mdnie_scenario_ui">MoKee (الافتراضي)</string>
     <string name="mdnie_scenario_video">فيديو</string>
     <string name="mdnie_scenario_video_warm">فيديو دافئ</string>
     <string name="mdnie_scenario_video_cold">فيديو بارد</string>

@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Seadke mDNIe stsenaarium</string>
     <string name="mdnie_accessibility_title_head">Juurdepääsetavusrežiim</string>
     <string name="mdnie_accessibility_summary_head">Määra mDNIe juurdepääsetavusrežiim</string>
-    <string name="mdnie_scenario_ui">LineageOS (vaikimisi)</string>
+    <string name="mdnie_scenario_ui">MoKee (vaikimisi)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video soe</string>
     <string name="mdnie_scenario_video_cold">Video külm</string>

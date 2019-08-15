@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Imposta scenario mDNle</string>
     <string name="mdnie_accessibility_title_head">Modalità di accesso facilitato</string>
     <string name="mdnie_accessibility_summary_head">Imposta la modalità di accesso facilitato mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (predefinito)</string>
+    <string name="mdnie_scenario_ui">MoKee (predefinito)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Toni caldi</string>
     <string name="mdnie_scenario_video_cold">Toni freddi</string>

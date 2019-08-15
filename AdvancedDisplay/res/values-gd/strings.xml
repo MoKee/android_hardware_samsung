@@ -19,7 +19,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="mdnie_accessibility_title_head">Modh na so-inntrigeachd</string>
     <string name="mdnie_accessibility_summary_head">Suidhich modh so-inntrigeachd mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (bun-roghainn)</string>
+    <string name="mdnie_scenario_ui">MoKee (bun-roghainn)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video blàth</string>
     <string name="mdnie_scenario_video_cold">Video fuar</string>

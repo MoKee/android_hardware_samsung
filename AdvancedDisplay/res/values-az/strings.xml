@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
     <string name="mdnie_accessibility_title_head">Əlçatımlılıq rejimi</string>
     <string name="mdnie_accessibility_summary_head">mDNIe əlçatımlılıq rejimini tənzimlə</string>
-    <string name="mdnie_scenario_ui">LineageOS (ilkin)</string>
+    <string name="mdnie_scenario_ui">MoKee (ilkin)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video - isti</string>
     <string name="mdnie_scenario_video_cold">Video - soyuq</string>

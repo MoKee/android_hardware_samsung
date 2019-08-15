@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
     <string name="mdnie_accessibility_title_head">無障礙模式</string>
     <string name="mdnie_accessibility_summary_head">設定 mDNIe 無障礙模式</string>
-    <string name="mdnie_scenario_ui">LineageOS (預設)</string>
+    <string name="mdnie_scenario_ui">MoKee (預設)</string>
     <string name="mdnie_scenario_video">視訊</string>
     <string name="mdnie_scenario_video_warm">影片 (暖色)</string>
     <string name="mdnie_scenario_video_cold">影片 (冷色)</string>

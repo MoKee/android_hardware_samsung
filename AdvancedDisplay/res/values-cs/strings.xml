@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">Nastavit scénář pro mDNIe</string>
     <string name="mdnie_accessibility_title_head">Režim usnadnění</string>
     <string name="mdnie_accessibility_summary_head">Nastavení režimu usnadnění mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (výchozí)</string>
+    <string name="mdnie_scenario_ui">MoKee (výchozí)</string>
     <string name="mdnie_scenario_video">Kamera</string>
     <string name="mdnie_scenario_video_warm">Režim teplých barev</string>
     <string name="mdnie_scenario_video_cold">Režim studených barev</string>

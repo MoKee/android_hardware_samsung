@@ -24,7 +24,7 @@
     <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
     <string name="mdnie_accessibility_title_head">โหมดการเข้าถึง</string>
     <string name="mdnie_accessibility_summary_head">ตั้งค่าโหมดการเข้าถึง mDNIe</string>
-    <string name="mdnie_scenario_ui">LineageOS (เริ่มต้น)</string>
+    <string name="mdnie_scenario_ui">MoKee (เริ่มต้น)</string>
     <string name="mdnie_scenario_video">วิดีโอ</string>
     <string name="mdnie_scenario_video_warm">วิดีโออบอุ่น</string>
     <string name="mdnie_scenario_video_cold">วิดีโอเย็น</string>
