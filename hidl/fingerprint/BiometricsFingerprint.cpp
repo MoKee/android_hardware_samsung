@@ -173,7 +173,18 @@ Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
 }
 
 Return<RequestStatus> BiometricsFingerprint::cancel() {
-    return ErrorFilter(ss_fingerprint_cancel());
+    int32_t ret = ss_fingerprint_cancel();
+
+#ifdef CALL_NOTIFY_ON_CANCEL
+    if (ret == 0) {
+        fingerprint_msg_t msg{};
+        msg.type = FINGERPRINT_ERROR;
+        msg.data.error = FINGERPRINT_ERROR_CANCELED;
+        notify(&msg);
+    }
+#endif
+
+    return ErrorFilter(ret);
 }
 
 Return<RequestStatus> BiometricsFingerprint::enumerate() {
@@ -288,19 +299,22 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             }
         } break;
         case FINGERPRINT_TEMPLATE_ENROLLING:
+#ifdef USES_PERCENTAGE_SAMPLES
+            const_cast<fingerprint_msg_t*>(msg)->data.enroll.samples_remaining =
+                100 - msg->data.enroll.samples_remaining;
+#endif
+#ifdef CALL_CANCEL_ON_ENROLL_COMPLETION
+            if(msg->data.enroll.samples_remaining == 0) {
+                thisPtr->ss_fingerprint_cancel();
+            }
+#endif
             LOG(DEBUG) << "onEnrollResult(fid=" << msg->data.enroll.finger.fid
                        << ", gid=" << msg->data.enroll.finger.gid
                        << ", rem=" << msg->data.enroll.samples_remaining << ")";
-            if (thisPtr->mClientCallback
+            if (!thisPtr->mClientCallback
                     ->onEnrollResult(devId, msg->data.enroll.finger.fid,
                                      msg->data.enroll.finger.gid, msg->data.enroll.samples_remaining)
                     .isOk()) {
-#ifdef USES_PERCENTAGE_SAMPLES
-                fingerprint_msg_t* newMsg = (fingerprint_msg_t*)msg;
-                newMsg->data.enroll.samples_remaining = 100 - msg->data.enroll.samples_remaining;
-                msg = newMsg;
-#endif
-            } else {
                 LOG(ERROR) << "failed to invoke fingerprint onEnrollResult callback";
             }
             break;
