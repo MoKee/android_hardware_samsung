@@ -35,7 +35,7 @@
     <string name="mdnie_scenario_ebook">Е-книга</string>
     <string name="mdnie_scenario_email">Имейл</string>
     <string name="mdnie_scenario_tdmb">Цифрова телевизия</string>
-    <string name="mdnie_accessibility_normal">Нормален</string>
+    <string name="mdnie_accessibility_normal">Нормално</string>
     <string name="mdnie_accessibility_inverse">Обърнат</string>
     <string name="mdnie_accessibility_color_blind">За далтонисти</string>
     <string name="mdnie_accessibility_screen_curtain">Екранна завеса</string>

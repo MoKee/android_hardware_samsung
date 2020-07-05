@@ -21,4 +21,21 @@
     <string name="screen_colors_title">Färger</string>
     <string name="mdnie_scenario_title_head">Scenario</string>
     <string name="mdnie_scenario_summary_head">Ställ in mDNIe-scenario</string>
+    <string name="mdnie_accessibility_title_head">Tillgänglighetsläge</string>
+    <string name="mdnie_scenario_ui">MoKee (standard)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_navigation">Navigation</string>
+    <string name="mdnie_scenario_gallery">Galleri</string>
+    <string name="mdnie_scenario_vt">Videosamtal</string>
+    <string name="mdnie_scenario_browser">Webbläsare</string>
+    <string name="mdnie_scenario_ebook">eBook</string>
+    <string name="mdnie_scenario_email">E-postadress</string>
+    <string name="mdnie_scenario_tdmb">Digital-Tv</string>
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Inverterad</string>
+    <string name="mdnie_accessibility_color_blind">Färgblind</string>
+    <string name="mdnie_accessibility_screen_curtain">Ridå</string>
+    <string name="mdnie_accessibility_grayscale">Grå</string>
+    <string name="mdnie_accessibility_gray_negative">Inverterad grått</string>
 </resources>
