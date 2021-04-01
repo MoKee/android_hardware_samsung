@@ -20,6 +20,7 @@
     <string name="category_screen_title">स्क्रीन</string>
     <string name="mdnie_scenario_title_head">परिस्थिती</string>
     <string name="mdnie_scenario_summary_head">mDNIe परिस्थिती सेट करा</string>
+    <string name="mdnie_scenario_video">व्हिडिओ</string>
     <string name="mdnie_scenario_camera">कॅमेरा</string>
     <string name="mdnie_accessibility_normal">सामान्य</string>
 </resources>

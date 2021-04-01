@@ -28,6 +28,7 @@
     <string name="mdnie_scenario_ebook">Leabhar-d</string>
     <string name="mdnie_scenario_email">Post-d</string>
     <string name="mdnie_scenario_tdmb">Telebhisean digiteach</string>
+    <string name="mdnie_accessibility_normal">Àbhaisteach</string>
     <string name="mdnie_accessibility_inverse">Ais-thionndaichte</string>
     <string name="mdnie_accessibility_color_blind">Dath-dhoille</string>
     <string name="mdnie_accessibility_screen_curtain">Cùirtear sgrìn</string>

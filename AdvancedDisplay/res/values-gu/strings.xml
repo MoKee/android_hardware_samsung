@@ -20,6 +20,7 @@
     <string name="category_screen_title">સ્ક્રીન</string>
     <string name="mdnie_scenario_title_head">દ્રશ્ય</string>
     <string name="mdnie_scenario_summary_head">mDNIe દ્રશ્ય સેટ કરો</string>
+    <string name="mdnie_scenario_video">વિડિઓ</string>
     <string name="mdnie_scenario_camera">કૅમેરો</string>
     <string name="mdnie_accessibility_normal">સામાન્ય</string>
 </resources>

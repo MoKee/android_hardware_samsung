@@ -35,7 +35,7 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Digitális televízió</string>
-    <string name="mdnie_accessibility_normal">Normális</string>
+    <string name="mdnie_accessibility_normal">Normál</string>
     <string name="mdnie_accessibility_inverse">Fordított</string>
     <string name="mdnie_accessibility_color_blind">Színvak</string>
     <string name="mdnie_accessibility_screen_curtain">Képernyő-függöny</string>

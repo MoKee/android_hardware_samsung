@@ -24,7 +24,7 @@
     <string name="mdnie_accessibility_title_head">Modo de accesibilidad</string>
     <string name="mdnie_accessibility_summary_head">Establecer el modo de accesibilidad mDNIe</string>
     <string name="mdnie_scenario_ui">MoKee (por defecto)</string>
-    <string name="mdnie_scenario_video">Vídeo</string>
+    <string name="mdnie_scenario_video">Video:</string>
     <string name="mdnie_scenario_video_warm">Video cálido</string>
     <string name="mdnie_scenario_video_cold">Video frío</string>
     <string name="mdnie_scenario_camera">Cámara</string>

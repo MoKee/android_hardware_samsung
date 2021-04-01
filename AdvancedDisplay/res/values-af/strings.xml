@@ -20,6 +20,7 @@
     <string name="category_screen_title">Skerm</string>
     <string name="screen_colors_title">Kleure</string>
     <string name="mdnie_scenario_summary_head">Stel die mDNIe scenario</string>
+    <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_camera">Kamera</string>
     <string name="mdnie_accessibility_normal">Normaal</string>
 </resources>

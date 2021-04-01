@@ -17,5 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="screen_colors_title">Colours</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_camera">Camera</string>
     <string name="mdnie_accessibility_normal">Normal</string>
 </resources>

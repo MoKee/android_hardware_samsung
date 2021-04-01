@@ -20,5 +20,8 @@
     <string name="category_screen_title">Ekran</string>
     <string name="mdnie_scenario_title_head">Ekran rejimi</string>
     <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
+    <string name="mdnie_scenario_video">Videolar</string>
     <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_gallery">Qalereya</string>
+    <string name="mdnie_accessibility_normal">Normal</string>
 </resources>

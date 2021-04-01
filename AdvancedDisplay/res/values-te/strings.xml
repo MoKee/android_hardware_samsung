@@ -20,6 +20,7 @@
     <string name="category_screen_title">స్క్రీన్</string>
     <string name="mdnie_scenario_title_head">దృశ్యవివరణ</string>
     <string name="mdnie_scenario_summary_head">mDNIe దృశ్యవివరణను సెట్ చేయుము</string>
+    <string name="mdnie_scenario_video">వీడియో</string>
     <string name="mdnie_scenario_camera">కెమెరా</string>
     <string name="mdnie_accessibility_normal">సాధారణం</string>
 </resources>

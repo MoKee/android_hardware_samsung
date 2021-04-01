@@ -16,5 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="mdnie_scenario_video">Vaizdo skam.</string>
     <string name="mdnie_scenario_camera">Fotoaparatas</string>
+    <string name="mdnie_scenario_gallery">Galerija</string>
+    <string name="mdnie_accessibility_normal">Normalus</string>
 </resources>

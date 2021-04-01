@@ -21,6 +21,7 @@
     <string name="screen_colors_title">צבעים</string>
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
+    <string name="mdnie_scenario_video">סרטון</string>
     <string name="mdnie_scenario_camera">מצלמה</string>
     <string name="mdnie_accessibility_normal">רגיל</string>
 </resources>

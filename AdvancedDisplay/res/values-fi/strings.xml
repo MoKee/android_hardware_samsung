@@ -24,6 +24,7 @@
     <string name="mdnie_accessibility_title_head">Helppokäyttötila</string>
     <string name="mdnie_accessibility_summary_head">Aseta mDNIe-tila</string>
     <string name="mdnie_scenario_ui">MoKee (oletus)</string>
+    <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video (lämmin)</string>
     <string name="mdnie_scenario_video_cold">Video (kylmä)</string>
     <string name="mdnie_scenario_camera">Kamera</string>

@@ -20,6 +20,7 @@
     <string name="category_screen_title">സ്ക്രീൻ</string>
     <string name="mdnie_scenario_title_head">അവസ്ഥ</string>
     <string name="mdnie_scenario_summary_head">mDNle അവസ്ഥ സജ്ജമാക്കാൻ</string>
+    <string name="mdnie_scenario_video">വീഡിയോ</string>
     <string name="mdnie_scenario_camera">ക്യാമറ</string>
     <string name="mdnie_accessibility_normal">സാധാരണ</string>
 </resources>

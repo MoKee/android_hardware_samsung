@@ -24,7 +24,7 @@
     <string name="mdnie_accessibility_title_head">Barrierefreier Modus</string>
     <string name="mdnie_accessibility_summary_head">mDNIe-Modus festlegen</string>
     <string name="mdnie_scenario_ui">MoKee (Standard)</string>
-    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video">Videoanruf</string>
     <string name="mdnie_scenario_video_warm">Videomodus (warm)</string>
     <string name="mdnie_scenario_video_cold">Videomodus (kalt)</string>
     <string name="mdnie_scenario_camera">Kamera</string>

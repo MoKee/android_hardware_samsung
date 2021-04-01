@@ -24,7 +24,7 @@
     <string name="mdnie_accessibility_title_head">ಪ್ರವೇಶಿಸುವಿಕೆ ಮಾದರಿ</string>
     <string name="mdnie_accessibility_summary_head">Mdnie ಪ್ರವೇಶಿಸುವಿಕೆ ಮಾದರಿ ಸಂಯೋಜಿಸು</string>
     <string name="mdnie_scenario_ui">MoKee (ಪೂರ್ವನಿಯೋಜಿತ)</string>
-    <string name="mdnie_scenario_video">ದೃಶ್ಯ</string>
+    <string name="mdnie_scenario_video">ವೀಡಿಯೊ</string>
     <string name="mdnie_scenario_video_warm">ಬೆಚ್ಚನೆ ದೃಶ್ಯ</string>
     <string name="mdnie_scenario_video_cold">ಶೀತ ದೃಶ್ಯ</string>
     <string name="mdnie_scenario_camera">ಕ್ಯಾಮರಾ</string>
@@ -35,7 +35,7 @@
     <string name="mdnie_scenario_ebook">e-ಪುಸ್ತಕ</string>
     <string name="mdnie_scenario_email">ಈ-ಮೇಲ್</string>
     <string name="mdnie_scenario_tdmb">ಡಿಜಿಟಲ್ ದೂರದರ್ಶನ</string>
-    <string name="mdnie_accessibility_normal">ಸಾಮಾನ್ಯ</string>
+    <string name="mdnie_accessibility_normal">ಸಹಜ</string>
     <string name="mdnie_accessibility_inverse">ವ್ಯತಿರಿಕ್ತವಾದ</string>
     <string name="mdnie_accessibility_color_blind">ಕುರುಡು ಬಣ್ಣ</string>
     <string name="mdnie_accessibility_screen_curtain">ತೆರೆಯ ಪರದೆ</string>

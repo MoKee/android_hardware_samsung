@@ -17,4 +17,5 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="screen_colors_title">Бои</string>
+    <string name="mdnie_scenario_video">Видео</string>
 </resources>

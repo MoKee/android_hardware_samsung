@@ -23,7 +23,7 @@
     <string name="mdnie_scenario_summary_head">mDNIe சூழ்நிலையை அமை</string>
     <string name="mdnie_accessibility_title_head">அணுகல் பயன்முறை</string>
     <string name="mdnie_scenario_ui">MoKee (இயல்புநிலை)</string>
-    <string name="mdnie_scenario_video">காணொளி</string>
+    <string name="mdnie_scenario_video">வீடியோ</string>
     <string name="mdnie_scenario_camera">கேமரா</string>
     <string name="mdnie_scenario_gallery">படத்தொகுப்பு</string>
     <string name="mdnie_scenario_vt">காணொளி அழைப்பு</string>

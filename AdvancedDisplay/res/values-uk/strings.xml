@@ -35,7 +35,7 @@
     <string name="mdnie_scenario_ebook">Електронна книга</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Цифрове телебачення</string>
-    <string name="mdnie_accessibility_normal">Звичайний</string>
+    <string name="mdnie_accessibility_normal">Нормальний</string>
     <string name="mdnie_accessibility_inverse">Інверсія</string>
     <string name="mdnie_accessibility_color_blind">Відео (режим кольорової сліпоти)</string>
     <string name="mdnie_accessibility_screen_curtain">Виріз на екрані</string>

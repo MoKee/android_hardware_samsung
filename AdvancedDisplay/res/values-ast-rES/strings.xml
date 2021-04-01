@@ -35,6 +35,7 @@
     <string name="mdnie_scenario_ebook">Llibru electrónicu</string>
     <string name="mdnie_scenario_email">Corréu electrónicu</string>
     <string name="mdnie_scenario_tdmb">Televisión dixital</string>
+    <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertíu</string>
     <string name="mdnie_accessibility_color_blind">Daltónicu</string>
     <string name="mdnie_accessibility_screen_curtain">Cortina de pantalla</string>

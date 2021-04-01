@@ -20,5 +20,7 @@
     <string name="category_screen_title">صفحه نمایش</string>
     <string name="mdnie_scenario_title_head">خط مشی</string>
     <string name="mdnie_scenario_summary_head">تنظیم خط مشی mDNIe</string>
+    <string name="mdnie_scenario_video">ویدئو</string>
     <string name="mdnie_scenario_camera">دوربین</string>
+    <string name="mdnie_accessibility_normal">عادی</string>
 </resources>

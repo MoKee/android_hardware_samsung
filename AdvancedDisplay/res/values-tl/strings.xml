@@ -17,6 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="screen_colors_title">Mga kulay</string>
+    <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_camera">Ang kamera</string>
     <string name="mdnie_scenario_gallery">Gallery</string>
     <string name="mdnie_scenario_browser">Browser</string>

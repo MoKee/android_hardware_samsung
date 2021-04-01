@@ -24,7 +24,7 @@
     <string name="mdnie_accessibility_title_head">Ułatwienia dostępu</string>
     <string name="mdnie_accessibility_summary_head">Ustaw tryb dostępności mDNIe</string>
     <string name="mdnie_scenario_ui">MoKee (domyślnie)</string>
-    <string name="mdnie_scenario_video">Wideo</string>
+    <string name="mdnie_scenario_video">Rozmowa wideo</string>
     <string name="mdnie_scenario_video_warm">Ciepły film</string>
     <string name="mdnie_scenario_video_cold">Zimny film</string>
     <string name="mdnie_scenario_camera">Aparat</string>
@@ -35,7 +35,7 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Telewizja cyfrowa</string>
-    <string name="mdnie_accessibility_normal">Normalny</string>
+    <string name="mdnie_accessibility_normal">Normalna</string>
     <string name="mdnie_accessibility_inverse">Odwrócony</string>
     <string name="mdnie_accessibility_color_blind">Daltonizm</string>
     <string name="mdnie_accessibility_screen_curtain">Kurtyna ekranowa</string>

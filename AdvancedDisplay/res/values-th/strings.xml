@@ -21,6 +21,7 @@
     <string name="mdnie_scenario_title_head">สถานการณ์</string>
     <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
     <string name="mdnie_scenario_ui">MoKee (เริ่มต้น)</string>
+    <string name="mdnie_scenario_video">วิดีโอ</string>
     <string name="mdnie_scenario_camera">กล้องถ่ายรูป</string>
     <string name="mdnie_accessibility_normal">ปกติ</string>
 </resources>

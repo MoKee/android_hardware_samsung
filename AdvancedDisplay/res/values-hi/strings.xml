@@ -16,6 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="mdnie_scenario_video">वीडियो</string>
     <string name="mdnie_scenario_camera">कैमरा</string>
     <string name="mdnie_accessibility_normal">सामान्य</string>
 </resources>

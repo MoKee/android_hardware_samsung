@@ -20,5 +20,7 @@
     <string name="category_screen_title">Ekrāns</string>
     <string name="mdnie_scenario_title_head">Scenārijs</string>
     <string name="mdnie_scenario_summary_head">Uzstādīt mDNIe scenāriju</string>
+    <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_accessibility_normal">Normāls</string>
 </resources>
